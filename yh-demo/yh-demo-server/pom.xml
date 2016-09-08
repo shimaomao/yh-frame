@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.palm.yh</groupId>
+        <artifactId>yh-demo</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>yh-demo-server</artifactId>
+    <name>yh-demo-server</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.palm.vertx</groupId>
+            <artifactId>palm-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.palm.vertx</groupId>
+            <artifactId>palm-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--yh start-->
+        <dependency>
+            <groupId>com.palm.yh</groupId>
+            <artifactId>yh-common</artifactId>
+        </dependency>
+        <!--yh end-->
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

@@ -1,0 +1,205 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.palm.yh</groupId>
+	<artifactId>yh-maven</artifactId>
+	<version>1.3.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>定义所有模块的公共依赖包</description>
+	<properties>
+		<palm.vertx.version>0.0.6-SNAPSHOT</palm.vertx.version>
+		<vertx.solrserver>2.1.0</vertx.solrserver>
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons.io.version>2.4</commons.io.version>
+		<vertx.io.version>3.3.2</vertx.io.version>
+
+		<!-- jcapcha 验证框架版本 -->
+		<com.octo.captcha.vertion>1.0-RC6</com.octo.captcha.vertion>
+
+		<!-- 工程编译编码使用utf-8 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- 编译路径编辑 -->
+		<install.package.name>${project.name}-install</install.package.name>
+		<install.package.dir>${project.build.directory}/${install.package.name}</install.package.dir>
+		<mlh.install.package.dir>/mlh-install-packages</mlh.install.package.dir>
+	</properties>
+	<!--依赖管理 -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- palm vertx -->
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-vertx</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-web</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-test</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-mongo</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-redis</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-oss</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.palm.vertx</groupId>
+			    <artifactId>palm-sms-service</artifactId>
+			    <version>${palm.vertx.version}</version>
+	        </dependency>
+
+			<!-- palm vertx end-->
+
+			<dependency>
+				<groupId>com.englishtown.vertx</groupId>
+				<artifactId>vertx-solr-service</artifactId>
+				<version>${vertx.solrserver}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-auth-util</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-spring</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-property-security</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-property-security-web</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-mq</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-auth-server</artifactId>
+				<version>${palm.vertx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.palm.vertx</groupId>
+			    <artifactId>palm-sms-common</artifactId>
+			    <version>${palm.vertx.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.palm.vertx</groupId>
+				<artifactId>palm-sms-web</artifactId>
+			    <version>${palm.vertx.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-web</artifactId>
+				<version>${vertx.io.version}</version>
+			</dependency>
+
+            <!--yh start-->
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-redis</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-mongo</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-config</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+            <!--yh end -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>utf8</encoding>
+                    </configuration>
+                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <!--Nexus私服，发布地址，发布地址 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://114.55.4.141:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://114.55.4.141:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+	<scm>
+		<url>https://192.168.0.4/svn/palm_mlh/code/trunk/mlh-frame</url>
+		<connection>scm:svn:https://192.168.0.4/svn/palm_mlh/code/trunk/mlh-frame</connection>
+		<developerConnection>scm:svn:https://192.168.0.4/svn/palm_mlh/code/trunk/mlh-frame</developerConnection>
+	</scm>
+</project>

@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>测试页面</title>
+</head>
+<body>
+	<p>测试获取验证码图片</p>
+	<img src="user/captcha/getImage?type=login&token=ddddd"> <br>
+	
+	<p>获取tokenId</p>
+	<form action="user/captcha/getToken" target="frame" method="get">
+		 <input type="submit" value="获取验证码信息">
+	</form>
+	<p>提交验证码表单</p>
+	<form  action="user/captcha/validate" target="frame" method="post">
+	    验证码  :<input name="response" type="text">   <br>
+	 <input name="token" type="hidden" value="ddddd">   <br>
+	    <input name="type" type="hidden" value="login">
+	    <input type="submit">
+	</form>
+	
+	<iframe name="frame" width=400 height=100> 
+	
+</body>
+</html>
