@@ -60,7 +60,7 @@ public class FindHandler implements Handler<RoutingContext> {
 
         userFuture.setHandler(handler ->{
             logger.debug("handler:{}, result:{}", handler.succeeded(), handler.result());
-            httpSupport.sendTemplate(routingContext, handler.result(), "/html/regiter.html", sendHandler->{
+            httpSupport.sendTemplate(routingContext, handler.result(), "/templates/login/loginPage.html", sendHandler->{
 
             });
         });

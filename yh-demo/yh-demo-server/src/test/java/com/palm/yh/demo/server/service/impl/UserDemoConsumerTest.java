@@ -24,7 +24,7 @@ public class UserDemoConsumerTest extends PalmTest {
     public void add(TestContext context) throws Exception {
         Async async = context.async();
         JsonObject userInfoJson = new JsonObject().put("userName", "fengzt").put("gender", "F");
-        palmVert.getVertx().eventBus().<JsonObject>send(YhConsumerAddressUtil.USER_ADD, userInfoJson, handler -> {
+        palmVert.getVertx().eventBus().<String>send(YhConsumerAddressUtil.USER_ADD, userInfoJson, handler -> {
             logger.debug("更新结果：{}， result: {}", handler.succeeded(), handler.result());
             async.complete();
         });
