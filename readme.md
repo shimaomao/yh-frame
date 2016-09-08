@@ -1,4 +1,4 @@
-##url命名规范
+##local url命名规范
 
 ####搜索：[domain]/search[/subroot][/restApi] 和 [domain]/searchs[/subroot][/restApi]
 
