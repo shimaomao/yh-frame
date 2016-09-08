@@ -1,5 +1,3 @@
-#马良行项目相关
-
 ##url命名规范
 
 ####搜索：[domain]/search[/subroot][/restApi] 和 [domain]/searchs[/subroot][/restApi]
