@@ -53,9 +53,10 @@ public class AddHandler implements Handler<RoutingContext> {
                     future.thenCompose(res -> {
                         CompletableFuture<JsonObject> next = new CompletableFuture<JsonObject>();
                         // 传递给注册
-                        palmVert.getVertx().eventBus().<JsonObject>send(YhConsumerAddressUtil.USER_ADD, res, reply -> {
+                        palmVert.getVertx().eventBus().<String>send(YhConsumerAddressUtil.USER_ADD, res, reply -> {
                             if (reply.succeeded()) {
-                                next.complete(reply.result().body());
+                                String id = reply.result().body();
+                                next.complete(new JsonObject().put("code", "0").put("data", new JsonObject().put("_id", id)));
                             } else {
                                 next.complete(new JsonObject().put("code", "-1").put("msg", "CONSUME_TIME_OUT"));
                             }
