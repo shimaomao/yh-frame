@@ -12,6 +12,6 @@
 		<property name="passwd" value="${mongodb.passwd}"></property>
 	</bean>
 
-	<context:component-scan base-package="com.palm.mlh.mongo.client">
-	</context:component-scan>
+	<!--<context:component-scan base-package="com.palm.mlh.mongo.client">
+	</context:component-scan>-->
 </beans>

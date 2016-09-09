@@ -1,5 +1,6 @@
 package com.palm.yh.common.helper;
 
+import com.palm.yh.common.service.RetCodeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,6 @@ public class ConfigHelper {
      */
     @Value("${host.path}")
     private String hostPath;
-
-
     public String getHostPath() {
         return hostPath;
     }
