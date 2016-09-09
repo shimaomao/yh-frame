@@ -13,15 +13,15 @@ public class YhConsumerAddressUtil {
 	/**
 	 * 新增用户
      */
-	public static final String USER_ADD = "P2P.add";
+	public static final String USER_ADD = "P2P.com.palm.yh.demo.server.service.add";
 
 	/**
 	 * 查询一个用户
      */
-	public static final String FIND_ONE = "P2P.findOne";
+	public static final String FIND_ONE = "P2P.com.palm.yh.demo.server.service.findOne";
 
 	/**
 	 * 更新用户信息
      */
-	public static final String USER_UPDATE = "P2P.update";
+	public static final String USER_UPDATE = "P2P.com.palm.yh.demo.server.service.update";
 }
