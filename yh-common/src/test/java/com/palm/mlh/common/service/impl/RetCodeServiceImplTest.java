@@ -24,7 +24,7 @@ public class RetCodeServiceImplTest extends PalmTest {
     @Autowired
     private RetCodeService retCodeService;
 
-    //@Test
+    @Test
     public void addRetCode(TestContext testContext ) throws Exception {
 
         JsonArray array = new JsonArray();
