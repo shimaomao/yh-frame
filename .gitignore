@@ -36,3 +36,10 @@ buildNumber.properties
 
 ## File-based project format:
 *.iws
+/yh-common/mlh-common (1).iml
+/yh-common/yh-common.iml
+/yh-demo/yh-demo-server/yh-demo-server.iml
+/yh-demo/yh-demo.iml
+/yh-frame.iml
+/yh-tool/yh-tool.iml
+/yh-maven/yh-maven.iml
