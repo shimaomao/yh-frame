@@ -23,11 +23,11 @@
             </activation>
             <properties>
                 <!-- mongo默认数据库配置 -->
-                <mongodb.url>114.55.4.141</mongodb.url>
+                <mongodb.url>114.55.250.243</mongodb.url>
                 <mongodb.port>27017</mongodb.port>
-                <mongodb.dbname>mlh_dev</mongodb.dbname>
-                <mongodb.account>mlhtest</mongodb.account>
-                <mongodb.passwd>malianghang123</mongodb.passwd>
+                <mongodb.dbname>yuanhui_dev</mongodb.dbname>
+                <mongodb.account>yuanhui_dev</mongodb.account>
+                <mongodb.passwd>yuanhuitest123890</mongodb.passwd>
             </properties>
         </profile>
         <profile>
@@ -37,11 +37,11 @@
             </activation>
             <properties>
                 <!-- mongo默认数据库配置 -->
-                <mongodb.url>114.55.4.141</mongodb.url>
+                <mongodb.url>114.55.250.243</mongodb.url>
                 <mongodb.port>27017</mongodb.port>
-                <mongodb.dbname>mlh_test</mongodb.dbname>
-                <mongodb.account>mlhtest</mongodb.account>
-                <mongodb.passwd>malianghang123</mongodb.passwd>
+                <mongodb.dbname>yuanhui_test</mongodb.dbname>
+                <mongodb.account>yuanhuitest</mongodb.account>
+                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
             </properties>
         </profile>
         <profile>
@@ -51,11 +51,11 @@
             </activation>
             <properties>
                 <!-- mongo默认数据库配置 -->
-                <mongodb.url>114.55.4.141</mongodb.url>
+                <mongodb.url>114.55.250.243</mongodb.url>
                 <mongodb.port>27017</mongodb.port>
-                <mongodb.dbname>mlh_test</mongodb.dbname>
-                <mongodb.account>mlhtest</mongodb.account>
-                <mongodb.passwd>malianghang123</mongodb.passwd>
+                <mongodb.dbname>yuanhui_test</mongodb.dbname>
+                <mongodb.account>yuanhuitest</mongodb.account>
+                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
             </properties>
         </profile>
         <profile>
@@ -65,11 +65,11 @@
             </activation>
             <properties>
                 <!-- mongo默认数据库配置 -->
-                <mongodb.url>114.55.4.141</mongodb.url>
+                <mongodb.url>114.55.250.243</mongodb.url>
                 <mongodb.port>27017</mongodb.port>
-                <mongodb.dbname>mlh_test</mongodb.dbname>
-                <mongodb.account>mlhtest</mongodb.account>
-                <mongodb.passwd>malianghang123</mongodb.passwd>
+                <mongodb.dbname>yuanhui_test</mongodb.dbname>
+                <mongodb.account>yuanhuitest</mongodb.account>
+                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
             </properties>
         </profile>
     </profiles>

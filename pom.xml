@@ -15,6 +15,7 @@
         <module>yh-tool</module>
         <module>yh-home</module>
         <module>yh-demo</module>
+        <module>yh-price</module>
     </modules>
 
     <build>

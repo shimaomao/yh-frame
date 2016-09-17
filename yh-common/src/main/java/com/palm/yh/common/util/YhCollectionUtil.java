@@ -15,4 +15,9 @@ public class YhCollectionUtil {
      * 表：异常码
      */
     public static final String RET_CODE_COLLECTION = "b_ret_code";
+    
+    /**
+     * 表：产品表
+     */
+    public static final String PRICE_PRODUCT = "price_product";
 }

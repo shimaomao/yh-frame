@@ -24,4 +24,34 @@ public class YhConsumerAddressUtil {
 	 * 更新用户信息
      */
 	public static final String USER_UPDATE = "P2P.com.palm.yh.demo.server.service.update";
+	
+	/**
+	 * 新增用户
+     */
+	public static final String PRICE_ADD = "P2P.com.palm.yh.price.server.service.add";
+
+	/**
+	 * 查询一个用户
+     */
+	public static final String PRICE_UPDATE = "P2P.com.palm.yh.price.server.service.findOne";
+
+	/**
+	 * 更新用户信息
+     */
+	public static final String PRICE_FIND_ONE = "P2P.com.palm.yh.price.server.service.update";
+	
+	/**
+	 * 查询所有用户信息
+     */
+	public static final String PRICE_USER_LIST = "P2P.com.palm.yh.price.server.service.findList";
+	
+	/**
+	 * 新增产品信息
+     */
+	public static final String PRICE_ADD_PRODUCT = "P2P.com.palm.yh.price.server.service.addProduct";
+	
+	/**
+	 * 查询产品信息（分页）
+     */
+	public static final String PRICE_FIND_PRODUCT = "P2P.com.palm.yh.price.server.service.findProduct";
 }

@@ -150,7 +150,18 @@
 				<artifactId>yh-config</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			
+			
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-price-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-price-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
             <!--yh end -->
         </dependencies>
     </dependencyManagement>
