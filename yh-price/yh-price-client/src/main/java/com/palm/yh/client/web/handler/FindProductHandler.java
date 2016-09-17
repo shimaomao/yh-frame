@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.palm.vertx.auth.util.service.UserAuthService;
 import com.palm.vertx.core.application.PalmVert;
 import com.palm.vertx.web.support.HttpSupport;
 import com.palm.yh.common.util.YhConsumerAddressUtil;
@@ -40,23 +39,20 @@ public class FindProductHandler implements Handler<RoutingContext> {
                 if (reply.succeeded()) {
                     JsonObject res = reply.result().body();
                     logger.debug("处理结果：{}", res);
-                    if (null != res && !res.isEmpty()) {
                     	productFuture.complete(res);
-                    } else {
-                    	productFuture.complete(null);
-                    }
                 } else {
-                	productFuture.complete(null);
+                	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("data", "{}").put("count", "{}"));
                 }
             });
         }else{
-        	productFuture.complete(null);
+        	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("data", "{}").put("count", "{}"));
         }
 
+        //待考虑sendJson
         productFuture.setHandler(handler ->{
             logger.debug("handler:{}, result:{}", handler.succeeded(), handler.result());
             //查询后跳转的页面
-            httpSupport.sendTemplate(routingContext, handler.result(), "/templates/login/loginPage.html", sendHandler->{
+            httpSupport.sendTemplate(routingContext, handler.result(), "/templates/price/findPage.html", sendHandler->{
 
             });
         });

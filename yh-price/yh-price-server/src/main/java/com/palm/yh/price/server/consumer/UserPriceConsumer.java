@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hazelcast.util.StringUtil;
 import com.palm.vertx.core.annotation.Consume;
 import com.palm.vertx.core.verticle.PalmConsumer;
 import com.palm.yh.common.util.YhConsumerAddressUtil;
@@ -122,9 +123,26 @@ public class UserPriceConsumer extends PalmConsumer {
     //查找产品
     private Handler<Message<JsonObject>> findProductHandler = handler ->{
         JsonObject body = handler.body();
+        if(body == null){
+        	handler.reply(new JsonObject().put("code", "-1").put("msg", "QUERY_ERROR").put("data", "{}").put("count", "{}")); 
+        	return;
+        }
         userDemoService.findProduct(body, resultHandler ->{
         	logger.debug("查询的结果：{}",resultHandler);
-                handler.reply(Json.encode(resultHandler));        
+        	JsonObject result=new JsonObject().put("code","0").put("msg", "").put("result", resultHandler);
+        	if(resultHandler.size()==0)
+        	{
+        		body.remove("heightMax");body.remove("heightMin");
+        		body.remove("crownMax");body.remove("crownMin");
+        		userDemoService.findProduct(body, repeatHandler ->{
+        			result.put("result", repeatHandler);
+        		});
+        	}
+        	userDemoService.findProductTotal(body, resultTotalHandler ->{
+        		result.put("count", resultTotalHandler);
+        		logger.debug("统计结果：{}",resultTotalHandler);
+        		handler.reply(result);        
+        	});
         });
     };
     

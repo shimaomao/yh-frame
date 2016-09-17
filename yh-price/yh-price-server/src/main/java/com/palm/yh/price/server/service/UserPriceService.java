@@ -71,7 +71,7 @@ public interface UserPriceService {
     void addProduct(JsonObject jsonObject, Handler<AsyncResult<String>> resultHandler);
 
     /**
-     * 添加产品信息
+     * 查询产品信息
      *
      * @param jsonObject
      * @param resultHandler 返回结果

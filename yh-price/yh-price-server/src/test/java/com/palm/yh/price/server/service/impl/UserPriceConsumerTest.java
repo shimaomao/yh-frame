@@ -80,9 +80,9 @@ public class UserPriceConsumerTest extends PalmTest {
     @Test
     public void findProduct(TestContext context) throws Exception {
     	Async async = context.async();
-    	JsonObject userInfoJson = new JsonObject().put("breedName", "香樟").put("area", "全国").put("heightMax", 150).put("skip", 1).put("limit",4);
+    	JsonObject userInfoJson = new JsonObject().put("breedName", "香樟").put("area", "全国").put("heightMax", 150).put("updateTimeMin", 1473750246211l).put("skip", 1).put("limit",4);
     	palmVert.getVertx().eventBus().<String>send(YhConsumerAddressUtil.PRICE_FIND_PRODUCT, userInfoJson, handler ->{
-    		logger.debug("更新结果：{}，result:{}", handler.succeeded(),handler.result().body());    	
+    		logger.debug("查询结果：{}，result:{}", handler.succeeded(),handler.result().body());    	
     		async.complete();
     	});
     }

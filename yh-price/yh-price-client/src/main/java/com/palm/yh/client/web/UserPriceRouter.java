@@ -12,8 +12,7 @@ import io.vertx.ext.web.Router;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * 个人信息http接口
- * Created by fengzt on 2016/9/7.
+ * 价格查询http接口
  */
 @Routing(rootPath = "/price")
 public class UserPriceRouter extends RouterWare {
