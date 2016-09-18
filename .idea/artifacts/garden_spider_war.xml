@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="garden-spider:war">
+    <output-path>$PROJECT_DIR$/../garden-spider/target</output-path>
+    <root id="archive" name="garden-spider.war">
+      <element id="artifact" artifact-name="garden-spider:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="garden-spider" />
+        <module name="mlh-attachment-server" />
+        <module name="mlh-captcha" />
+        <module name="mlh-common" />
+        <module name="mlh-config" />
+        <module name="mlh-detail-webservice" />
+        <module name="mlh-dynamic" />
+        <module name="mlh-home-webservice" />
+        <module name="mlh-message" />
+        <module name="mlh-mhome-webservice" />
+        <module name="mlh-mongo" />
+        <module name="mlh-redis" />
+        <module name="mlh-search-webservice" />
+        <module name="mlh-sms" />
+        <module name="mlh-user" />
+        <module name="mlh-user-info" />
+        <module name="mlh-user-server" />
+        <module name="mlh-userlog-config" />
+        <module name="mlh-userlog-webservice" />
+        <module name="mlh-web-demo-server" />
+        <module name="palm-auth-server" />
+        <module name="palm-auth-util" />
+        <module name="palm-cluster" />
+        <module name="palm-common" />
+        <module name="palm-mongo" />
+        <module name="palm-mq" />
+        <module name="palm-mybatis" />
+        <module name="palm-oss" />
+        <module name="palm-oss-mgt" />
+        <module name="palm-property-security" />
+        <module name="palm-property-security-web" />
+        <module name="palm-redis" />
+        <module name="palm-sms-common" />
+        <module name="palm-sms-sdk-sync" />
+        <module name="palm-sms-service" />
+        <module name="palm-sms-web" />
+        <module name="palm-spring" />
+        <module name="palm-test" />
+        <module name="palm-utility" />
+        <module name="palm-vertx" />
+        <module name="palm-web" />
+        <module name="palm-weixin" />
+        <module name="yh-common" />
+        <module name="yh-config" />
+        <module name="yh-demo-client" />
+        <module name="yh-demo-server" />
+        <module name="yh-home" />
+        <module name="yh-mongo" />
+        <module name="yh-price-client" />
+        <module name="yh-price-server" />
+        <module name="yh-redis" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="garden-spider" target="1.8" />
+      <module name="mlh-attachment" target="1.8" />
+      <module name="mlh-attachment-server" target="1.8" />
+      <module name="mlh-auth" target="1.8" />
+      <module name="mlh-captcha" target="1.8" />
+      <module name="mlh-common" target="1.8" />
+      <module name="mlh-config" target="1.8" />
+      <module name="mlh-detail" target="1.8" />
+      <module name="mlh-detail-webservice" target="1.8" />
+      <module name="mlh-dynamic" target="1.8" />
+      <module name="mlh-frame" target="1.8" />
+      <module name="mlh-home" target="1.8" />
+      <module name="mlh-home-webservice" target="1.8" />
+      <module name="mlh-maven" target="1.8" />
+      <module name="mlh-message" target="1.8" />
+      <module name="mlh-mhome-webservice" target="1.8" />
+      <module name="mlh-mongo" target="1.8" />
+      <module name="mlh-redis" target="1.8" />
+      <module name="mlh-search" target="1.8" />
+      <module name="mlh-search-webservice" target="1.8" />
+      <module name="mlh-sms" target="1.8" />
+      <module name="mlh-tool" target="1.8" />
+      <module name="mlh-user" target="1.8" />
+      <module name="mlh-user-info" target="1.8" />
+      <module name="mlh-user-server" target="1.8" />
+      <module name="mlh-userlog" target="1.8" />
+      <module name="mlh-userlog-config" target="1.8" />
+      <module name="mlh-userlog-webservice" target="1.8" />
+      <module name="mlh-web-demo" target="1.8" />
+      <module name="mlh-web-demo-server" target="1.8" />
+      <module name="palm-auth" target="1.8" />
+      <module name="palm-auth-server" target="1.8" />
+      <module name="palm-auth-util" target="1.8" />
+      <module name="palm-cluster" target="1.8" />
+      <module name="palm-common" target="1.8" />
+      <module name="palm-maven" target="1.8" />
+      <module name="palm-mongo" target="1.8" />
+      <module name="palm-mq" target="1.8" />
+      <module name="palm-mybatis" target="1.8" />
+      <module name="palm-oss" target="1.8" />
+      <module name="palm-oss-mgt" target="1.8" />
+      <module name="palm-oss-parent" target="1.8" />
+      <module name="palm-property-security" target="1.8" />
+      <module name="palm-property-security-web" target="1.8" />
+      <module name="palm-redis" target="1.8" />
+      <module name="palm-security" target="1.8" />
+      <module name="palm-sms" target="1.8" />
+      <module name="palm-sms-common" target="1.8" />
+      <module name="palm-sms-sdk-sync" target="1.8" />
+      <module name="palm-sms-service" target="1.8" />
+      <module name="palm-sms-web" target="1.8" />
+      <module name="palm-spring" target="1.8" />
+      <module name="palm-test" target="1.8" />
+      <module name="palm-utility" target="1.8" />
+      <module name="palm-vertx" target="1.8" />
+      <module name="palm-vertx-framework" target="1.8" />
+      <module name="palm-web" target="1.8" />
+      <module name="palm-weixin" target="1.8" />
+      <module name="palmg" target="1.8" />
+      <module name="palmg-cluster" target="1.8" />
+      <module name="palmg-core" target="1.8" />
+      <module name="palmg-parent" target="1.8" />
+      <module name="palmg-utility" target="1.8" />
+      <module name="yh-common" target="1.8" />
+      <module name="yh-config" target="1.8" />
+      <module name="yh-demo" target="1.8" />
+      <module name="yh-demo-client" target="1.8" />
+      <module name="yh-demo-server" target="1.8" />
+      <module name="yh-frame" target="1.8" />
+      <module name="yh-home" target="1.8" />
+      <module name="yh-maven" target="1.8" />
+      <module name="yh-mongo" target="1.8" />
+      <module name="yh-price" target="1.8" />
+      <module name="yh-price-client" target="1.8" />
+      <module name="yh-price-server" target="1.8" />
+      <module name="yh-redis" target="1.8" />
+      <module name="yh-tool" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
