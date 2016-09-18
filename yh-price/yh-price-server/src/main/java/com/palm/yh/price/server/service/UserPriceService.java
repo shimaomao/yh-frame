@@ -85,4 +85,12 @@ public interface UserPriceService {
      * @param resultHandler 返回结果
      */
     void findProductTotal(JsonObject query, Consumer<List<JsonObject>> result);
+    
+    /**
+     * 供应商统计
+     * 
+     * @param query
+     * @param result
+     */
+    void supplierTotal(JsonObject query, Consumer<List<JsonObject>> result);
 }

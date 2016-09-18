@@ -163,8 +163,7 @@ public class UserPriceServiceImpl implements UserPriceService {
      */
 	@Override
 	public void findProduct(JsonObject query, Consumer<List<JsonObject>> result) {
-		String breedName = query.getString("breedName");
-        if (null == breedName || breedName.isEmpty()) {
+		if (null == query || query.isEmpty()) {
             result.accept(null);
             return;
         }
@@ -193,14 +192,11 @@ public class UserPriceServiceImpl implements UserPriceService {
      */
 	@Override
 	public void findProductTotal(JsonObject query, Consumer<List<JsonObject>> result) {
-		String breedName = query.getString("breedName");
-        if (null == breedName || breedName.isEmpty()) {
+		if (null == query || query.isEmpty()) {
             result.accept(null);
             return;
         }
-        //去掉页码和条数
-        query.remove("page");
-        query.remove("pageNumber"); 
+        
         //过滤主体
         JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
              
@@ -219,6 +215,35 @@ public class UserPriceServiceImpl implements UserPriceService {
                 .put("pipeline", pipelineArrayJson);
 
         dynamicRunCommand(result, command);		
+	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public void supplierTotal(JsonObject query, Consumer<List<JsonObject>> result) {
+		if (null == query || query.isEmpty()) {
+            result.accept(null);
+            return;
+        }
+
+        //过滤主体
+        JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
+             
+        //分组获得供应商
+        JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$supplier")));
+        JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$_id.supplier")));
+   
+        //组装查询条件
+        JsonArray pipelineArrayJson = new JsonArray().add(matchJson).add(groupJson).add(groupJson1);
+        
+        //组装aggregate命令
+        JsonObject command = new JsonObject()
+                .put("aggregate", YhCollectionUtil.PRICE_PRODUCT)
+                .put("pipeline", pipelineArrayJson);
+
+        dynamicRunCommand(result, command);		
+		
 	}
 
 	/**
