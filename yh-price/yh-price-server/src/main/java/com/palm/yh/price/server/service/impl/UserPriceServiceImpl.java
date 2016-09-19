@@ -252,9 +252,14 @@ public class UserPriceServiceImpl implements UserPriceService {
 	 * @return
 	 */
 	static JsonObject pushJson(JsonObject query){
-		JsonObject matchJson = new JsonObject().put("breedName", query.getString("breedName")).put("area", query.getString("area"))
-				.put("sourceNo", query.getString("sourceNo"));
-        if(query.getDouble("midiaMeterMax") != null || query.getDouble("midiaMeterMin") != null){
+		JsonObject matchJson = new JsonObject().put("area", new JsonObject().put("$regex", query.getString("area")));
+        if(query.getString("breedName") != null && query.getString("breedName") != ""){
+        	matchJson.put("breedName", new JsonObject().put("$regex", query.getString("breedName")));
+        }
+        if(query.getString("productName") != null && query.getString("productName") != ""){
+        	matchJson.put("productName", new JsonObject().put("$regex", query.getString("productName")));
+        }
+		if(query.getDouble("midiaMeterMax") != null || query.getDouble("midiaMeterMin") != null){
         	JsonObject midiaMeter = new JsonObject();
         	if(query.getDouble("midiaMeterMax") != null)midiaMeter.put("$lte", query.getDouble("midiaMeterMax"));
         	if(query.getDouble("midiaMeterMin") != null)midiaMeter.put("$gte", query.getDouble("midiaMeterMin"));
@@ -272,14 +277,17 @@ public class UserPriceServiceImpl implements UserPriceService {
         	if(query.getDouble("crownMin") != null)crown.put("$gte", query.getDouble("crownMin"));
         	matchJson.put("crown", crown);
 		}
-		if(query.getLong("updateTimeMax") != null || query.getLong("updateTimeMin") != null){
+		if(query.getString("updateTimeMax") != null || query.getString("updateTimeMin") != null){
 			JsonObject updateTime = new JsonObject();
-        	if(query.getLong("updateTimeMax") != null)updateTime.put("$lte", query.getLong("updateTimeMax"));
-        	if(query.getLong("updateTimeMin") != null)updateTime.put("$gte", query.getLong("updateTimeMin"));
+        	if(query.getString("updateTimeMax") != null)updateTime.put("$lte", query.getString("updateTimeMax"));
+        	if(query.getString("updateTimeMin") != null)updateTime.put("$gte", query.getString("updateTimeMin"));
         	matchJson.put("updateTime", updateTime);
 		}
-		if(query.getString("invoiceTypeNo") != null){
+		if(query.getString("invoiceTypeNo") != null && query.getString("invoiceTypeNo") != ""){
 			matchJson.put("invoiceTypeNo", query.getString("invoiceTypeNo"));
+		}
+		if(query.getString("sourceNo") != null && query.getString("sourceNo") !=""){
+			matchJson.put("sourceNo", query.getString("sourceNo"));
 		}
 		return matchJson;
 	}

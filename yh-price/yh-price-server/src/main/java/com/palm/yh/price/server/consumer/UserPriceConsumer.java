@@ -51,7 +51,15 @@ public class UserPriceConsumer extends PalmConsumer {
         		body.remove("heightMax");body.remove("heightMin");
         		body.remove("crownMax");body.remove("crownMin");
         		userDemoService.findProduct(body, repeatHandler ->{
-        			result.put("result", repeatHandler);
+        			if(repeatHandler.size()==0){
+        				body.put("productName", body.getString("breedName"));
+        				body.remove("breedName");
+        				userDemoService.findProduct(body, thirdHandler ->{
+        					result.put("result", thirdHandler);
+        				});
+        			}else{
+        				result.put("result", repeatHandler);
+        			}
         		});
         	}
         	userDemoService.findProductTotal(body, resultTotalHandler ->{
