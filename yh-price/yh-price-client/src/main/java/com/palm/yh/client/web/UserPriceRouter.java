@@ -10,6 +10,7 @@ import com.palm.yh.client.web.handler.FindProductHandler;
 import com.palm.yh.client.web.handler.OpenPageHandler;
 
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 
 /**
  * 价格查询http接口
@@ -43,6 +44,7 @@ public class UserPriceRouter extends RouterWare {
         router.post("/findProduct").handler(findProductHandler);
         
         //导入excel表并返回数据
+        router.post("/excelData").handler(BodyHandler.create().setMergeFormAttributes(true));
         router.post("/excelData").handler(excelHandler);
         
     }

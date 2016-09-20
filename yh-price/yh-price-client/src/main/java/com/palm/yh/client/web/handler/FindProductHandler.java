@@ -44,11 +44,11 @@ public class FindProductHandler implements Handler<RoutingContext> {
         	                    logger.debug("处理结果：{}", res);
         	                    productFuture.complete(res);
         	                } else {
-        	                	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("data", "{}").put("count", "{}"));
+        	                	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("result", "{}").put("count", "{}"));
         	                }
         	            });
         	        }else{
-        	        	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("data", "{}").put("count", "{}"));
+        	        	productFuture.complete(new JsonObject().put("code", "-1").put("msg", "QUERY_TIME_OUT").put("result", "{}").put("count", "{}"));
         	        }
 
         	        productFuture.setHandler(handler ->{

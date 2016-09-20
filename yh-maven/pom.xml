@@ -151,8 +151,12 @@
 				<version>${project.version}</version>
 			</dependency>
 			
-			
 			<dependency>
+				<groupId>com.palm.yh</groupId>
+				<artifactId>yh-price</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- <dependency>
 				<groupId>com.palm.yh</groupId>
 				<artifactId>yh-price-client</artifactId>
 				<version>${project.version}</version>
@@ -161,7 +165,7 @@
 				<groupId>com.palm.yh</groupId>
 				<artifactId>yh-price-server</artifactId>
 				<version>${project.version}</version>
-			</dependency>
+			</dependency> -->
             <!--yh end -->
         </dependencies>
     </dependencyManagement>

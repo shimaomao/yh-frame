@@ -252,7 +252,7 @@ public class UserPriceServiceImpl implements UserPriceService {
 	 * @return
 	 */
 	static JsonObject pushJson(JsonObject query){
-		JsonObject matchJson = new JsonObject().put("area", new JsonObject().put("$regex", query.getString("area")));
+		JsonObject matchJson = new JsonObject().put("area", new JsonObject().put("$regex", "^"+query.getString("area")+".*$"));
         if(query.getString("breedName") != null && query.getString("breedName") != ""){
         	matchJson.put("breedName", new JsonObject().put("$regex", query.getString("breedName")));
         }

@@ -1,10 +1,6 @@
 package com.palm.yh.client.web.handler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,21 +10,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.palm.vertx.auth.util.service.UserAuthService;
 import com.palm.vertx.core.application.PalmVert;
 import com.palm.vertx.web.support.HttpSupport;
 
@@ -52,41 +43,45 @@ public class ExcelHandler implements Handler<RoutingContext> {
 
     @Autowired
     private PalmVert palmVert;
+    
+    static String EXCEL = "application/vnd.ms-excel";
 
     @Override
     public void handle(RoutingContext routingContext) {
-    	 logger.debug("进入excel",routingContext.fileUploads());
-    	 Future<JsonObject> excelFuture = Future.future();
-    	 try {
-    		 excelFuture.complete(Rwriter());
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-    	 excelFuture.setHandler(handler ->{
-	            logger.debug("handler:{}, result:{}", handler.succeeded(), handler.result());
-	            httpSupport.sendJson(routingContext, handler.result());
-	    });
-   	 /*Set<FileUpload> fileUploadSet = routingContext.fileUploads();
+    	Future<JsonObject> excelFuture = Future.future();
+   	    Set<FileUpload> fileUploadSet = routingContext.fileUploads();
         Iterator<FileUpload> fileUploadIterator = fileUploadSet.iterator();
-        while (fileUploadIterator.hasNext()){
           FileUpload fileUpload = fileUploadIterator.next();
-
-          // To get the uploaded file do
-          Buffer uploadedFile = Vertx.vertx().fileSystem().readFileBlocking(fileUpload.uploadedFileName());
-           logger.debug("uploadedFile:{}",uploadedFile);
-          // Uploaded File Name
-          try {
-            String fileName = URLDecoder.decode(fileUpload.fileName(), "UTF-8");
-            logger.debug("fileName:{}",fileName);
-           
-          } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+          logger.debug("文件类型：{}", fileUpload.contentType());
+          logger.debug("文件临时路径：{}",  fileUpload.uploadedFileName());
+          logger.debug("文件大小：{}",  fileUpload.size());
+          logger.debug("文件名:{}",fileUpload.fileName());
+          if(!fileUpload.contentType().equals(EXCEL)){
+        	  logger.debug("导入文件，不是EXCEL格式");
+        	  excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "导入文件，不是EXCEL格式"));
+        	  excelFuture.setHandler(handler ->{
+        	  httpSupport.sendJson(routingContext,handler.result());
+        	  });
+	          return;
           }
-
-          // Use the Event Bus to dispatch the file now
-          // Since Event Bus does not support POJOs by default so we need to create a MessageCodec implementation
-          // and provide methods for encode and decode the bytes
-        }*/
+          File directory = new File("excel");
+		  logger.debug("excel存放路径:{}",directory.getAbsolutePath());
+          // 获取excel内容
+          String path =new File("excel").getAbsolutePath()+"/"+fileUpload.fileName();
+          Buffer uploadedFile = Vertx.vertx().fileSystem().readFileBlocking(fileUpload.uploadedFileName());
+          palmVert.getVertx().fileSystem().writeFile(path,uploadedFile, result -> {
+        	    if(result.succeeded()) {
+	        	    logger.debug("读取excel成功！");
+					excelFuture.complete(new JsonObject().put("code", "0").put("result",Rwriter(path)));
+        	    }else {
+        	    	logger.debug("获取excel失败");
+        	    	excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "获取excel失败，请重新导入"));
+        	    }
+          });
+        excelFuture.setHandler(handler ->{
+            logger.debug("handler:{}, result:{}", handler.succeeded(), handler.result());
+            httpSupport.sendJson(routingContext, handler.result());
+        });
       };
       
      public static Sheet getSheet(Workbook wb, int sheetIndex) {  
@@ -100,15 +95,14 @@ public class ExcelHandler implements Handler<RoutingContext> {
           return wb.getSheetAt(sheetIndex);  
       } 
      
-    public static JsonObject Rwriter() throws FileNotFoundException {
-		 	String path = "E:\\华东项目采购清单.xls";  
+    public static JsonObject Rwriter(String path){
 		 	//读取excel
 		 	Workbook wbs = getWb(path);  
 	        List<List<String>> list = getExcelRows(getSheet(wbs, 0), -1, -1);   //得到上传文件内容
-	        
+	    
 	        JsonObject result = new JsonObject();
 	        int buffer[] = new int[5];
-	        //第一行序号 
+	        //获取字段对应列的index
 	        for (int i = 0; i < list.size(); i++) {  
 	            List<String> row = list.get(i);  
 	            for (int j = 0; j < row.size(); j++) {
@@ -119,7 +113,7 @@ public class ExcelHandler implements Handler<RoutingContext> {
 	            	else if(row.get(j).contains("冠幅"))buffer[4]=j;
 	            } 
 	    	}
-	        for (int i = 0; i < list.size(); i++) { 
+	        for (int i = 1; i < list.size(); i++) { 
 	            List<String> row = list.get(i);  
 	            if(row.size()<4) continue;
 	            JsonObject excel = new JsonObject();
@@ -127,11 +121,9 @@ public class ExcelHandler implements Handler<RoutingContext> {
 	            excel.put("productName", row.get(buffer[1]));
 	            excel.put("midiaMeter", row.get(buffer[2]));
 	            excel.put("height", row.get(buffer[3]));
-	            excel.put("crown", row.get(buffer[4]));
-	            logger.debug("excel:{}",excel);
+	            excel.put("crown", row.get(buffer[4])); 
 	            result.put(""+i+"", excel);
 	        }
-	        logger.debug("result:{}",result);
 	        return result;
 	}
     
