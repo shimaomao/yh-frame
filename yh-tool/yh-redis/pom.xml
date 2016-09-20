@@ -23,8 +23,8 @@
             </activation>
             <properties>
                 <!--redis config start-->
-                <redis.host>114.55.4.141</redis.host>
-                <redis.port>6379</redis.port>
+                <redis.host>114.55.250.243</redis.host>
+                <redis.port>6300</redis.port>
                 <redis.password>malianghang</redis.password>
                 <redis.selectDatabase>0</redis.selectDatabase>
                 <redis.expire>1800</redis.expire>
@@ -39,8 +39,8 @@
             </activation>
             <properties>
                 <!--redis config start-->
-                <redis.host>114.55.4.141</redis.host>
-                <redis.port>6379</redis.port>
+                <redis.host>114.55.250.243</redis.host>
+                <redis.port>6300</redis.port>
                 <redis.password>malianghang</redis.password>
                 <redis.selectDatabase>0</redis.selectDatabase>
                 <redis.expire>1800</redis.expire>
@@ -55,8 +55,8 @@
             </activation>
             <properties>
                 <!--redis config start-->
-                <redis.host>114.55.4.141</redis.host>
-                <redis.port>6379</redis.port>
+                <redis.host>114.55.250.243</redis.host>
+                <redis.port>6300</redis.port>
                 <redis.password>malianghang</redis.password>
                 <redis.selectDatabase>0</redis.selectDatabase>
                 <redis.expire>1800</redis.expire>
