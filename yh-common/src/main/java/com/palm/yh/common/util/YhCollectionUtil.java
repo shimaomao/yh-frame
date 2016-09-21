@@ -20,4 +20,16 @@ public class YhCollectionUtil {
      * 表：产品表
      */
     public static final String PRICE_PRODUCT = "price_product";
+    
+    /**
+     * 表：地区表
+     */
+    public static final String PRICE_ARCE = "price_province";
+    
+    /**
+     * 表：爬取数据表
+     */
+    
+    public static final String T_CONTENT="t_content";
+    
 }

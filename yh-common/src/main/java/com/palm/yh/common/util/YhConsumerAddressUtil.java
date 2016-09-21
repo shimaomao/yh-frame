@@ -54,4 +54,8 @@ public class YhConsumerAddressUtil {
 	 * 查询产品信息（分页）
      */
 	public static final String PRICE_FIND_PRODUCT = "P2P.com.palm.yh.price.server.service.findProduct";
+	/**
+	 * 查询地区
+     */
+	public static final String PRICE_FIND_AREA = "P2P.com.palm.yh.price.server.service.area";
 }
