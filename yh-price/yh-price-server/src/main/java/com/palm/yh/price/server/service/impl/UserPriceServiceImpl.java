@@ -6,18 +6,23 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.palm.vertx.mongo.support.MongoSupport;
+import com.palm.vertx.redis.support.RedisSupport;
 import com.palm.yh.common.util.OpType;
 import com.palm.yh.common.util.YhCollectionUtil;
 import com.palm.yh.price.server.service.UserPriceService;
 
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClientUpdateResult;
@@ -32,6 +37,15 @@ public class UserPriceServiceImpl implements UserPriceService {
 
     @Autowired
     private MongoSupport mongoSupport;
+    
+    @Autowired
+    private RedisSupport redisSupport;
+
+    @Value("${mlh.ret.code.prefix}")
+    private String retCodeRedisPrefix;
+
+    //过期时间（单位：s）
+    private final static long RET_CODE_EXPIRED = 7 * 24 * 60 * 60;
 
     /**
      * {@inheritDoc}
@@ -76,10 +90,9 @@ public class UserPriceServiceImpl implements UserPriceService {
             handler.handle(null);
             return;
         }
-        //查询站内消息
-        query.put("op", OpType.ACT);
+        //查询爬取数据信息
         logger.debug("[findList]查询条件：{}", query);
-        mongoSupport.getMongoClient().find(YhCollectionUtil.USER_INFO_COLLECTION, query, resultHandler -> {
+        mongoSupport.getMongoClient().find(YhCollectionUtil.T_CONTENT, query, resultHandler -> {
             if (resultHandler.succeeded()) {
                 logger.debug("[findList]返回的结果 :{}", resultHandler.result());
             }
@@ -148,11 +161,11 @@ public class UserPriceServiceImpl implements UserPriceService {
      */
 	@Override
 	public void addProduct(JsonObject jsonObject, Handler<AsyncResult<String>> resultHandler) {
-		jsonObject.put("createTime", new Date().getTime());
-		jsonObject.put("updateTime", new Date().getTime());
-        jsonObject.put("op", OpType.ACT);
-        logger.debug("[add] json内容：{}", jsonObject);
-        mongoSupport.getMongoClient().save(YhCollectionUtil.PRICE_PRODUCT, jsonObject, result -> {
+		JsonObject product  = crawLingJson(jsonObject);
+		product.put("source", "1");
+		product.put("op", OpType.ACT);
+        logger.debug("[add] json内容：{}", product);
+        mongoSupport.getMongoClient().save(YhCollectionUtil.PRICE_PRODUCT, product, result -> {
             logger.debug("[add]结果 {} result：{}", result.succeeded(), result.result());
             resultHandler.handle(result);
         });
@@ -172,6 +185,9 @@ public class UserPriceServiceImpl implements UserPriceService {
              
         //排序条件
         JsonObject sortJson = new JsonObject().put("$sort", sortJson(query));
+        
+        //project.add(projectJson)
+        JsonObject projectJson = new JsonObject().put("$project", productJson());
    
         //组装查询条件
         Integer skip = query.getInteger("skip")-1>0?(query.getInteger("skip")-1)*query.getInteger("limit"):0;
@@ -246,13 +262,86 @@ public class UserPriceServiceImpl implements UserPriceService {
 		
 	}
 
+	@Override
+	public void findArce(JsonObject query, Consumer<List<JsonObject>> result) {
+		 String key = query.getString("key");
+		 JsonObject matchJson = new JsonObject().put("$match", new JsonObject());
+		 JsonObject projectJson = new JsonObject().put("$project", new JsonObject().put("_id", 0).put("areaNo", 1).put("areaName", 1));
+		 JsonArray pipelineArrayJson = new JsonArray().add(matchJson).add(projectJson);
+	   
+		  JsonObject command = new JsonObject()
+	                .put("aggregate", YhCollectionUtil.PRICE_ARCE)
+	                .put("pipeline", pipelineArrayJson);
+
+	        dynamicRunCommand(result, command);		
+	        /*Future<String> redisFuture = Future.future();
+
+	        //1.缓存查询
+	        redisSupport.getRedisClient().get(retCodeRedisPrefix + key, redishandler -> {
+	            logger.debug("[findOneRetCode]redis查询结果 {} result：{}", redishandler.succeeded(), redishandler.result());
+	            redisFuture.complete(redishandler.result());
+	        });
+
+	        redisFuture.setHandler(handler -> {
+	            logger.debug("redisFuture setHandler {}, result : {}", handler.succeeded(), handler.result());
+	            //2.redis中已经有值
+	            if (handler.succeeded() && StringUtils.isNotBlank(handler.result())) {
+	            	
+	            	List<JsonObject> jsons = handler.result().getList();
+	            	resultHandler.accept(jsons);
+	            } else {
+	                Future<List<JsonObject>>  mongodbFuture = Future.future();
+	                //3.查询数据库
+	                mongoSupport.getMongoClient().find(YhCollectionUtil.RET_CODE_COLLECTION, query, findOneHandler -> {
+	                    logger.debug("[findOne]数据库查询结果{}, result: {}", findOneHandler.succeeded(), findOneHandler.result());
+	                    if (findOneHandler.succeeded()) {
+	                        mongodbFuture.complete(findOneHandler.result());
+	                    } else {
+	                        resultHandler.accept(null);
+	                    }
+	                });
+
+	                //4.放入redis
+	                mongodbFuture.setHandler(ar -> {
+	                    List<JsonObject> json = ar.result();
+	                    logger.debug("[set]数据库查询结果{}, result: {}", ar.succeeded(), ar.result());
+	                    if (null != json && !json.isEmpty()) {
+	                        //5. 重新set到redis
+	                        redisSupport.getRedisClient().setex(retCodeRedisPrefix + key, RET_CODE_EXPIRED, Json.encode(json), setexHandler -> {
+	                            logger.debug("[setex]存入redis结果：{}", setexHandler.result());
+	                            if (setexHandler.succeeded()) {
+	                                resultHandler.accept(json);
+	                            } else {
+	                                resultHandler.accept(null);
+	                            }
+	                        });
+	                    } else {
+	                        resultHandler.accept(null);
+	                    }
+	                });
+	            }
+
+	        });*/
+	}
+
+	/**
+	 * 过滤字段
+	 */
+	static JsonObject productJson(){
+		JsonObject proJson = new JsonObject().put("_id", 0).put("area",1).put("areaNo",0)
+		.put("op", 0).put("miDiameter", 1).put("totalPrice", 1).put("updateTime",1).put("source", 0)
+		.put("productName",1).put("breedName", 0).put("createTime", 0).put("supplier", 1).put("invoiceType", 0)
+		.put("startingFare", 1).put("tel", 1).put("contacts", 1).put("height", 1).put("crown", 1);
+		return proJson;
+	}
+	
 	/**
 	 * 刷选条件（产品名、地区、米径/胸径、时间、高度、冠幅、数据源、发票类型）
 	 * @param query
 	 * @return
 	 */
 	static JsonObject pushJson(JsonObject query){
-		JsonObject matchJson = new JsonObject().put("area", new JsonObject().put("$regex", "^"+query.getString("area")+".*$"));
+		JsonObject matchJson = new JsonObject().put("areaNo", new JsonObject().put("$regex", "^"+query.getString("area")+".*$"));
         if(query.getString("breedName") != null && query.getString("breedName") != ""){
         	matchJson.put("breedName", new JsonObject().put("$regex", query.getString("breedName")));
         }
@@ -344,6 +433,34 @@ public class UserPriceServiceImpl implements UserPriceService {
 		return proJson;
 	}
 	
+	/**
+	 * 筛选爬取数据
+	 * @param query
+	 * @return
+	 */
+	static JsonObject crawLingJson(JsonObject query){
+		JsonObject crawLing = new JsonObject();
+		crawLing.put("productName", query.getString("title"));
+		//截取时间
+		query.getString("releasetime");
+		//匹配数字
+		crawLing.put("startingFare", query.getString("price"));
+		//需要去模糊匹配
+		crawLing.put("area", query.getString("price"));
+		//供应商
+		crawLing.put("supplier", query.getString("company"));
+		//联系人
+		crawLing.put("contacts", query.getString("contacts"));
+		//电话
+		crawLing.put("tel", query.getString("tel"));
+		//胸径/米径(cm)需要截取最大最小值
+		crawLing.put("midiaMeter", query.getString("midiameter"));
+		//高度(cm)需要截取最大最小值
+		crawLing.put("height", query.getString("height"));
+		//冠幅(cm)
+		crawLing.put("crown", query.getString("crown"));
+		return crawLing;
+	}
 	
 	/**
      * 运行aggregate命令

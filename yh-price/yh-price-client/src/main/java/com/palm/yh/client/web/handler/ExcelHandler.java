@@ -27,6 +27,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.FileUpload;
 import io.vertx.ext.web.RoutingContext;
@@ -56,14 +57,14 @@ public class ExcelHandler implements Handler<RoutingContext> {
           logger.debug("文件临时路径：{}",  fileUpload.uploadedFileName());
           logger.debug("文件大小：{}",  fileUpload.size());
           logger.debug("文件名:{}",fileUpload.fileName());
-          if(!fileUpload.contentType().equals(EXCEL)){
+       /*   if(!fileUpload.contentType().equals(EXCEL)){
         	  logger.debug("导入文件，不是EXCEL格式");
         	  excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "导入文件，不是EXCEL格式"));
         	  excelFuture.setHandler(handler ->{
         	  httpSupport.sendJson(routingContext,handler.result());
         	  });
 	          return;
-          }
+          }*/
           File directory = new File("excel");
 		  logger.debug("excel存放路径:{}",directory.getAbsolutePath());
           // 获取excel内容
@@ -71,11 +72,23 @@ public class ExcelHandler implements Handler<RoutingContext> {
           Buffer uploadedFile = Vertx.vertx().fileSystem().readFileBlocking(fileUpload.uploadedFileName());
           palmVert.getVertx().fileSystem().writeFile(path,uploadedFile, result -> {
         	    if(result.succeeded()) {
-	        	    logger.debug("读取excel成功！");
-					excelFuture.complete(new JsonObject().put("code", "0").put("result",Rwriter(path)));
+        	    	 File file = new File(fileUpload.uploadedFileName());
+        	  		 file.delete();
+	        	    logger.debug("读取文件成功！");
+	        	  	 try {
+	        	  		Workbook workbook= WorkbookFactory.create(new File(path));
+	        	  		excelFuture.complete(new JsonObject().put("code", "0").put("result",Rwriter(workbook)));
+					} catch (Exception e) {
+						  e.printStackTrace();
+						  logger.debug("导入文件，不是EXCEL格式");
+			        	  excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "导入文件，不是EXCEL格式"));
+			        	  excelFuture.setHandler(handler ->{
+			        	  httpSupport.sendJson(routingContext,handler.result());
+			        	  });
+					} 	
         	    }else {
-        	    	logger.debug("获取excel失败");
-        	    	excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "获取excel失败，请重新导入"));
+        	    	logger.debug("获取文件失败");
+        	    	excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "获取文件失败，请重新导入"));
         	    }
           });
         excelFuture.setHandler(handler ->{
@@ -95,12 +108,10 @@ public class ExcelHandler implements Handler<RoutingContext> {
           return wb.getSheetAt(sheetIndex);  
       } 
      
-    public static JsonObject Rwriter(String path){
-		 	//读取excel
-		 	Workbook wbs = getWb(path);  
+    public static JsonArray Rwriter(Workbook wbs){
 	        List<List<String>> list = getExcelRows(getSheet(wbs, 0), -1, -1);   //得到上传文件内容
 	    
-	        JsonObject result = new JsonObject();
+	        JsonArray result = new JsonArray();
 	        int buffer[] = new int[5];
 	        //获取字段对应列的index
 	        for (int i = 0; i < list.size(); i++) {  
@@ -113,7 +124,7 @@ public class ExcelHandler implements Handler<RoutingContext> {
 	            	else if(row.get(j).contains("冠幅"))buffer[4]=j;
 	            } 
 	    	}
-	        for (int i = 1; i < list.size(); i++) { 
+	        for (int i = 0; i < list.size(); i++) { 
 	            List<String> row = list.get(i);  
 	            if(row.size()<4) continue;
 	            JsonObject excel = new JsonObject();
@@ -122,7 +133,7 @@ public class ExcelHandler implements Handler<RoutingContext> {
 	            excel.put("midiaMeter", row.get(buffer[2]));
 	            excel.put("height", row.get(buffer[3]));
 	            excel.put("crown", row.get(buffer[4])); 
-	            result.put(""+i+"", excel);
+	            result.add(excel);
 	        }
 	        return result;
 	}
@@ -194,12 +205,12 @@ public class ExcelHandler implements Handler<RoutingContext> {
         return list;  
    }  
       
-    public static Workbook getWb(String path) {
+  /*  public static Workbook getWb(String path) {
   		try {
   			return WorkbookFactory.create(new File(path));
   		} catch (Exception e) {
   			throw new RuntimeException("读取EXCEL文件出错", e);
   		}
-  	}
+  	}*/
 
 }

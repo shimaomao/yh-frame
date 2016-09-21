@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html, charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>运费查询</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/allCSS.css">
+    <link rel="stylesheet" type="text/css" href="../css/freight/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/freight/freight.css">
+
+    <!--模板-->
+    <!-- bootstrap 3.0.2 -->
+    <link href="../css/plug-in/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="../css/plug-in/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="../css/plug-in/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="../css/plug-in/AdminLTE.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="head_box">
+    <div class="head_logo">LOGO</div>
+</div>
+
+<div class="war skin-blue">
+    <!--左边导航-->
+    <div class="nav_left sidebar">
+        <ul class="sidebar-menu nav_left_ul">
+            <li><a href="/price/findPage">首页</a></li>
+            <li><a href="#">运费查询</a></li>
+        </ul>
+    </div>
+
+    <!--查询运费-->
+    <div class="demandbox">
+        <ul>
+            <li>
+                <div class="projectRegion">
+                    <label>工程地区：</label>
+                    <input type="text" name="variety" value="" class="form-control input_w" placeholder="首次输入详细地址后自动保存地址，下次不用输入" id="cityBegin" />
+                </div>
+                <div class="projectRegion">
+                    <label>苗木地区：</label>
+                    <input type="text" name="variety" value="" class="form-control input_w" placeholder="自动读取供应商地区" id="cityFinish" />
+                </div>
+                <div class="projectRegion">
+                    <button type="button" class="btn btn-default botton" id="cityInquire" class="cityInquire">查询费用</button>
+                </div>
+                <div class="distanceCost">
+                    <div class="distance">参考运输距离：<span id="allDistance">0</span></div>
+                    <div class="distance"><b>5.2</b>米货车参考运费：<em>0</em>- <em>0</em>元</div>
+                    <div class="distance"><b>9.6</b>米货车参考运费：<em>0</em>- <em>0</em>元</div>
+                    <div class="distance"><b>13.5</b>米货车参考运费：<em>0</em>- <em>0</em>元</div>
+                    <div class="distance"><b>17.5</b>米货车参考运费：<em>0</em>- <em>0</em>元</div>
+                </div>
+            </li>
+            <li>
+                <div class="explainBox">
+                    <h1>运费查询页面说明：</h1>
+                    <p>1、工程地区选项。首次进入运费查询页面，需要输入工程详细地址，输入后系统自动保存地址，下次进入该页面直接显示地址。以后进入该页面均默认显示上一次输入的地址。</p>
+                    <p>2、苗木地区选项。从上一级页面跳转过来时，自动将供应商所在地区输入。</p>
+                    <p>3、查询结果显示。显示参考运输距离，显示4种运输车型5.2米，9.6米，13.5米，17.5米的参考运费，运输距离由百度地图计算得出，参考运费根据物流单价x距离得到。</p>
+                    <p>5、页面最下方显示百度地图，显示起点到终点路线。</p>
+                </div>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <!--baidu-->
+    <div class="allmap">
+        <div id="allmap"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/plug-in/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/freight/freight.js" charset="utf-8"></script>
+<!--百度地图-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8jG5Mwl8FVdYRQQ6dTFGKGSQ63EHH2Mw"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+*{
+    margin:0;
+    padding:0;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial,"宋体";
+    font-size:12px;
+    background:#fff !important;
+}
+em,i{
+    font-style: normal;
+}
+.war{
+    margin-left: 220px;
+    z-index: 1;
+}
+input[type=search]::-ms-clear{
+    display: none;
+}
+input[type=search]::-ms-reveal{
+    display: none;
+}
+.head_box {
+    border-bottom: solid 1px #ddd;
+    padding-bottom: 15px;
+    padding-top:10px;
+    background: #3c8dbc;
+    z-index: 2 !important;
+    position: relative;
+}
+.head_logo {
+    border: solid 1px #333;
+    width: 200px;
+    height: 60px;
+    margin-left: 20px;
+    line-height: 60px;
+    text-align: center;
+    background: #fff;
+}
+.nav_left{
+    position: absolute;
+    top: 0px;
+    left: 0;
+    background: #f4f4f4;
+    width: 220px;
+    height: 100%;
+    z-index: 1 ;
+    margin-top: 86px;
+}
+.nav_left_ul{
+    margin-top: 30px !important;
+}
+

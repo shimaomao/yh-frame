@@ -1,0 +1,3 @@
+{"code":"0","msg":"",
+  "data":[{"area":"全国","op":"ACT","miDiameter":150,"totalPrice":10,"updateTime":1473750246211,"source":"1","productName":"香樟","breedName":"香樟","createTime":1473750246211,"supplier":"苗圃店","invoiceType":"p1","startingFare":10,"tel":"13812345678","_id":"57d7a4e6ddda381748e456ac","contacts":"苗农","height":140,"crown":10}],
+  "count":[{"miDiameterMax":150,"miDiameterMin":150,"FareMax":120,"FareMin":10,"TotalPriceMax":4550,"TotalPriceMin":10,"FareAvg":21.18,"PriceAvg":451.0,"countTotal":11}, {"supplierTotal":2}] }

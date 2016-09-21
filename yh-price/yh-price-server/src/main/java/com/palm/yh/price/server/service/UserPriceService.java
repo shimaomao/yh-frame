@@ -93,4 +93,11 @@ public interface UserPriceService {
      * @param result
      */
     void supplierTotal(JsonObject query, Consumer<List<JsonObject>> result);
+    
+    /**
+     * 查询地区
+     * @param query
+     * @param handler
+     */
+    void findArce(JsonObject query, Consumer<List<JsonObject>> resultHandler);
 }
