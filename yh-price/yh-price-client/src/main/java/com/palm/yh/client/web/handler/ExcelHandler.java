@@ -49,22 +49,22 @@ public class ExcelHandler implements Handler<RoutingContext> {
 
     @Override
     public void handle(RoutingContext routingContext) {
-    	Future<JsonObject> excelFuture = Future.future();
-   	    Set<FileUpload> fileUploadSet = routingContext.fileUploads();
-        Iterator<FileUpload> fileUploadIterator = fileUploadSet.iterator();
+    	  Future<JsonObject> excelFuture = Future.future();
+   	      Set<FileUpload> fileUploadSet = routingContext.fileUploads();
+          Iterator<FileUpload> fileUploadIterator = fileUploadSet.iterator();
+          if(!fileUploadIterator.hasNext()){
+        	  logger.debug("获取文件失败");
+	       	  excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "获取文件失败！"));
+	       	  excelFuture.setHandler(handler ->{
+	       	  httpSupport.sendJson(routingContext,handler.result());
+	       	  });
+	          return;
+          }
           FileUpload fileUpload = fileUploadIterator.next();
           logger.debug("文件类型：{}", fileUpload.contentType());
           logger.debug("文件临时路径：{}",  fileUpload.uploadedFileName());
           logger.debug("文件大小：{}",  fileUpload.size());
           logger.debug("文件名:{}",fileUpload.fileName());
-       /*   if(!fileUpload.contentType().equals(EXCEL)){
-        	  logger.debug("导入文件，不是EXCEL格式");
-        	  excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "导入文件，不是EXCEL格式"));
-        	  excelFuture.setHandler(handler ->{
-        	  httpSupport.sendJson(routingContext,handler.result());
-        	  });
-	          return;
-          }*/
           File directory = new File("excel");
 		  logger.debug("excel存放路径:{}",directory.getAbsolutePath());
           // 获取excel内容
@@ -87,8 +87,8 @@ public class ExcelHandler implements Handler<RoutingContext> {
 			        	  });
 					} 	
         	    }else {
-        	    	logger.debug("获取文件失败");
-        	    	excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "获取文件失败，请重新导入"));
+        	    	logger.debug("读文件失败");
+        	    	excelFuture.complete(new JsonObject().put("code", "-1").put("msg", "读取文件失败，请重新导入"));
         	    }
           });
         excelFuture.setHandler(handler ->{
