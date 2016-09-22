@@ -41,5 +41,72 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+
+        <plugins>
+            <!-- 自动生成安装包文件目录begin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 把项目依赖的jar包输出到安装包的lib目录下 -->
+                            <outputDirectory>${install.package.dir}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-into-install-dir</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!-- 拷贝classes以及bin脚本文件目录到安装包目录下 -->
+                                <copy todir="${install.package.dir}/classes">
+                                    <fileset dir="${project.build.directory}/classes/">
+                                    </fileset>
+                                </copy>
+                                <!-- 拷贝bin脚本文件，注意bin脚本目录需要先放到项目的根目录下：每个脚本文件需要修改对应的进程名 -->
+                                <copy todir="${install.package.dir}/bin">
+                                    <fileset dir="${basedir}/bin/">
+                                    </fileset>
+                                </copy>
+                                <!-- 拷贝页面文件，注意这里是相对路径，每个项目可能不一样，请根据当前项目与mlh-web-demo的路径进行配置 -->
+                                <copy todir="${install.package.dir}/classes/">
+                                    <fileset dir="../../yh-home/src/main/web/">
+                                    </fileset>
+                                </copy>
+                                <!-- 把生成安装包目录进行打包ZIP格式的压缩包 -->
+                                <!--<mkdir dir="${mlh.install.package.dir}" />-->
+                                <zip destfile="${mlh.install.package.dir}/${install.package.name}.zip" update="false">
+                                    <zipfileset dir="${install.package.dir}" prefix="${project.name}" />
+                                </zip>
+                                <mkdir dir="${mlh.install.package.dir}/bin" />
+                                <copy todir="${mlh.install.package.dir}/bin">
+                                    <fileset dir="${basedir}/bin/">
+                                        <include name="${project.name}.sh" />
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 自动生成安装包文件目录end -->
+        </plugins>
     </build>
 </project>
