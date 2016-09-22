@@ -17,8 +17,35 @@ $(document).ready(function(){
         $(".fomr_type li").last().css({"border-right":"none"})
     })
     
+    /*****设置时间*********/
+    $(function(){
+    	 var date = new Date();
+    	 $('#time').val(getNowFormatDate(date));
+    	 date.setDate(date.getDate() - 59);
+    	 $('#time2').val(getNowFormatDate(date));
+    })
+    function getNowFormatDate(Date) {
+	    var date = Date;
+	    var seperator1 = "-";
+	    var seperator2 = ":";
+	    var year = date.getFullYear();
+	    var month = date.getMonth() + 1;
+	    var strDate = date.getDate();
+	    if (month >= 1 && month <= 9) {
+	        month = "0" + month;
+	    }
+	    if (strDate >= 0 && strDate <= 9) {
+	        strDate = "0" + strDate;
+	    }
+	    var currentdate = year + seperator1 + month + seperator1 + strDate
+	            + " " + date.getHours() + seperator2 + date.getMinutes()
+	            + seperator2 + date.getSeconds();
+	    return currentdate;
+    }
+    
     /*****省份*********/
     $(function(){
+    	$(".buttom_w").val(localStorage.getItem("areaNo"));
         var div = $(".province dd em");
         var _initialize = 1001;
         for(var i= 0,max=div.length;i<max;i++){
@@ -41,31 +68,37 @@ $(document).ready(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
         $("[name=nn]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
         $("[name=aa]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
         $("[name=bb]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
         $("[name=cc]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
         $("[name=dd]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
+            localStorage.setItem("areaNo", $(this).text());
         })
     })
 
@@ -100,6 +133,10 @@ $(document).ready(function(){
         }
         
         function add(page,sortField,sort){
+	        	if($(".buttom_w").val().trim() == ''){
+	        		alert("请选择地区");
+	        		return;
+	        	}
                 $.ajax({
                     type: 'POST',
                     url: "/price/findProduct",
