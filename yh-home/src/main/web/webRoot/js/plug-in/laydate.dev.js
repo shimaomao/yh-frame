@@ -593,7 +593,7 @@ Dates.view = function(elem, options){
           +'</div>'
           +(config.isv ? '<a href="http://sentsin.com/layui/laydate/" class="laydate_v" target="_blank">laydate-v'+ laydate.v +'</a>' : '')
         +'</div>';
-        doc.body.appendChild(div); 
+        doc.body.appendChild(div);
         Dates.box = S('#'+as[0]);        
         Dates.events();
         div = null;

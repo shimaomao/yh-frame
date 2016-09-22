@@ -80,9 +80,7 @@ $(document).ready(function(){
         $("#cityInquire").click(function(){
             baidu();
         });
-        /*$(".cityInquire").keydown(function(){
-            baidu();
-        })*/
+        $("#cityInquire").click(); 
         $(this).keydown(function (e){
             var key = e.which;
             console.log(key);

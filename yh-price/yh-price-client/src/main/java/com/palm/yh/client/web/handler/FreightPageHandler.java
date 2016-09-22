@@ -15,15 +15,19 @@ import io.vertx.ext.web.RoutingContext;
  * 打开运费页面
  */
 @Component
-public class freightPageHandler implements Handler<RoutingContext> {
-    private Logger logger = LoggerFactory.getLogger(freightPageHandler.class);
+public class FreightPageHandler implements Handler<RoutingContext> {
+    private Logger logger = LoggerFactory.getLogger(FreightPageHandler.class);
   
     @Autowired
     private HttpSupport httpSupport;
     
     @Override
     public void handle(RoutingContext routingContext) {
-	            httpSupport.sendTemplate(routingContext, new JsonObject(), "/webRoot/freight.html", result ->{
+	    	JsonObject param = new JsonObject();
+	    	String destination = routingContext.request().getParam("destination");
+	    	param.put("destination", !destination.equals("null")?destination:"");
+	    	logger.debug("接收参数:{}",param);
+	        httpSupport.sendTemplate(routingContext, param, "/webRoot/freight.html", result ->{
 	                logger.debug("结果：{}", result);
             });
     }

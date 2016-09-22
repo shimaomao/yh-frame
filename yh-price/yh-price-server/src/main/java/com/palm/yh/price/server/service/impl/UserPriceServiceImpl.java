@@ -376,7 +376,7 @@ public class UserPriceServiceImpl implements UserPriceService {
 			matchJson.put("invoiceTypeNo", query.getString("invoiceTypeNo"));
 		}
 		if(query.getString("sourceNo") != null && query.getString("sourceNo") !=""){
-			matchJson.put("sourceNo", query.getString("sourceNo"));
+			matchJson.put("source", query.getString("sourceNo"));
 		}
 		return matchJson;
 	}
