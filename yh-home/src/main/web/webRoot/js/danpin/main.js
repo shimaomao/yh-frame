@@ -20,9 +20,9 @@ $(document).ready(function(){
     /*****设置时间*********/
     $(function(){
     	 var date = new Date();
-    	 $('#time').val(getNowFormatDate(date));
-    	 date.setDate(date.getDate() - 59);
     	 $('#time2').val(getNowFormatDate(date));
+    	 date.setDate(date.getDate() - 59);
+    	 $('#time').val(getNowFormatDate(date));
     })
     function getNowFormatDate(Date) {
 	    var date = Date;
@@ -68,37 +68,37 @@ $(document).ready(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
         $("[name=nn]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
         $("[name=aa]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
         $("[name=bb]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
         $("[name=cc]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
         $("[name=dd]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
-            localStorage.setItem("areaNo", $(this).text());
+            localStorage.setItem("areaNo", $(this).val());
         })
     })
 
