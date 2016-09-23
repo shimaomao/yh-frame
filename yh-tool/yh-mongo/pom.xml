@@ -41,7 +41,7 @@
                 <mongodb.port>27017</mongodb.port>
                 <mongodb.dbname>yuanhui_test</mongodb.dbname>
                 <mongodb.account>yuanhuitest</mongodb.account>
-                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
+                <mongodb.passwd>yuanhuitest123890</mongodb.passwd>
             </properties>
         </profile>
         <profile>
@@ -55,7 +55,7 @@
                 <mongodb.port>27017</mongodb.port>
                 <mongodb.dbname>yuanhui_test</mongodb.dbname>
                 <mongodb.account>yuanhuitest</mongodb.account>
-                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
+                <mongodb.passwd>yuanhuitest123890</mongodb.passwd>
             </properties>
         </profile>
         <profile>
@@ -69,7 +69,7 @@
                 <mongodb.port>27017</mongodb.port>
                 <mongodb.dbname>yuanhui_test</mongodb.dbname>
                 <mongodb.account>yuanhuitest</mongodb.account>
-                <mongodb.passwd>yuanhuitest123889900</mongodb.passwd>
+                <mongodb.passwd>yuanhuitest123890</mongodb.passwd>
             </properties>
         </profile>
     </profiles>
