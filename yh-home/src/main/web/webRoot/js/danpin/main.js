@@ -396,32 +396,59 @@ $(document).ready(function(){
             }
         })
 
-        /******上传文件*****/
+        /******上传excel文件*****/
          $("#uploading").click(function(){
-             ajaxFileUpload();
+        	var file = $("#file").val();
+     		//如果文件为空
+     		if (file == '') {
+     			alert('请上传excel文件!');
+     			return;
+     		}
+     		//如果文件不是xls或者xlsx 提示输入正确的excel文件
+    		if ((file.indexOf('.xls') == -1 && file.indexOf('.xlsx') == -1)) {
+    			alert('请上传正确的excel,后缀名为xls或xlsx!');
+    			return;
+    		}
+     		var option = {
+     				url : "/price/excelData",
+     				type : 'POST',
+     				dataType : "json",
+     				clearForm: true,
+     				success : function(data) {
+     					 $(".folder").hide();
+     					if(data.code == 0){
+     						var result = data.result;
+     						 var excelHtml="<tr><th>序号</th><th>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
+     						$(result).each(function(index){
+     							    if(index ==0) return;
+     							 excelHtml+="<tr>"
+     								 +"<td>"
+      	                             +index
+      	                             +"</td>"
+     	                             +"<td>"
+     	                             +result[index].productName
+     	                             +"</td>"
+     	                             +"<td>"
+    	                             +result[index].midiaMeter
+    	                             +"</td>"
+    	                             +"<td>"
+     	                             +result[index].height
+     	                             +"</td>"
+     	                             +"<td>"
+    	                             +result[index].crown
+    	                             +"</td>"
+     	                             +"</tr>"
+     						});
+     						$("#excelTable").html(excelHtml);
+     					}else{
+     						alert(data.msg);
+     					}
+     				}
+     		};
+     		$("#excelUpload").ajaxSubmit(option);
+     		return false;
+     		
          });
-         function ajaxFileUpload() {
-            $.ajaxFileUpload
-            (
-                {
-                    url: '/price/excelData', //用于文件上传的服务器端请求地址
-                    secureuri: false, //是否需要安全协议，一般设置为false
-                    fileElementId: 'file', //文件上传域的ID
-                    dataType: 'json', //返回值类型 一般设置为json
-                    data:{},
-                    success: function (data, status)  //服务器成功响应处理函数
-                    {
-
-                    },
-                    error: function (data, status, e)//服务器响应失败处理函数
-                    {
-                        alert(e);
-                    }
-                }
-            )
-            return false;
-        }
-
         $("#excel").on("click",function(){
             $(".folder").show();
         })
