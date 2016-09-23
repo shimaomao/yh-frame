@@ -12,6 +12,8 @@
 		<commons.lang.version>2.6</commons.lang.version>
 		<commons.io.version>2.4</commons.io.version>
 		<vertx.io.version>3.3.2</vertx.io.version>
+		<!--office jia-->
+		<poi.version>3.9</poi.version>
 
 		<!-- jcapcha 验证框架版本 -->
 		<com.octo.captcha.vertion>1.0-RC6</com.octo.captcha.vertion>
@@ -21,7 +23,7 @@
 		<!-- 编译路径编辑 -->
 		<install.package.name>${project.name}-install</install.package.name>
 		<install.package.dir>${project.build.directory}/${install.package.name}</install.package.dir>
-		<mlh.install.package.dir>/mlh-install-packages</mlh.install.package.dir>
+		<mlh.install.package.dir>/yh-install-packages</mlh.install.package.dir>
 	</properties>
 	<!--依赖管理 -->
 	<dependencyManagement>
@@ -156,7 +158,18 @@
 				<artifactId>yh-price</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-        </dependencies>
+
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+		</dependencies>
     </dependencyManagement>
     <build>
         <pluginManagement>

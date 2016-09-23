@@ -84,7 +84,7 @@
                                     </fileset>
                                 </copy>-->
                                 <!-- 把生成安装包目录进行打包ZIP格式的压缩包 -->
-                                <!--<mkdir dir="${mlh.install.package.dir}" />-->
+                                <mkdir dir="${mlh.install.package.dir}" />
                                 <zip destfile="${mlh.install.package.dir}/${install.package.name}.zip" update="false">
                                     <zipfileset dir="${install.package.dir}" prefix="${project.name}" />
                                 </zip>
