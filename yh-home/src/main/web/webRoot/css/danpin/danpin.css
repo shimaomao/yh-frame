@@ -136,3 +136,7 @@
 body{
   height:100% !important;
 }
+.excel{
+  display: none;
+
+}
