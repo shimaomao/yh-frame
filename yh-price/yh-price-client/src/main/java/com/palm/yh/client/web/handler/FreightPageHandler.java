@@ -27,7 +27,7 @@ public class FreightPageHandler implements Handler<RoutingContext> {
 	    	String destination = routingContext.request().getParam("destination");
 	    	param.put("destination", !destination.equals("null")?destination:"");
 	    	logger.debug("接收参数:{}",param);
-	        httpSupport.sendTemplate(routingContext, param, "/webRoot/freight.html", result ->{
+	        httpSupport.sendTemplate(routingContext, param, "/webroot/freight.html", result ->{
 	                logger.debug("结果：{}", result);
             });
     }

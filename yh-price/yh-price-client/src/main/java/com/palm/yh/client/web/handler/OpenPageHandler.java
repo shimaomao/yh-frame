@@ -43,7 +43,7 @@ public class OpenPageHandler implements Handler<RoutingContext> {
 
             arceFuture.setHandler(handler ->{
 	            logger.debug("handler:{}, result:{}", handler.succeeded(), handler.result());
-	            httpSupport.sendTemplate(routingContext, handler.result(), "/webRoot/danpin.html", result ->{
+	            httpSupport.sendTemplate(routingContext, handler.result(), "/webroot/danpin.html", result ->{
 	                logger.debug("结果：{}", result);
 	            });
             });
