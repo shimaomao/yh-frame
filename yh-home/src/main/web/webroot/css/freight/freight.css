@@ -42,3 +42,6 @@
 .input_w{
     padding:0 12px !important;
 }
+img{
+    width: auto !important;
+}

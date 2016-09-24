@@ -306,10 +306,10 @@ $(document).ready(function(){
                                 + data[i].updateTime
                                 + "</td>"
                                 + "<td>"
-                                + "<a href='/price/freightPage/"+data[i].area+"' target='view_window' class='badge bg-red'>"
+                                + "<a href='/price/freightPage/"+data[i].area+"' target='_Blank' class='badge bg-red'>"
                                 + "查询运费"
                                 + "</a>"
-                                + "<a href='"+data[i].details+"' target='view_window' class='badge bg-red'>"
+                                + "<a href='"+data[i].details+"' target='_Blank' class='badge bg-red'>"
                                 + "详情"
                                 + "</a>"
                                 + "</td>"

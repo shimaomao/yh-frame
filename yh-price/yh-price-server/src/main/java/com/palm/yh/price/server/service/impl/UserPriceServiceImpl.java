@@ -348,19 +348,19 @@ public class UserPriceServiceImpl implements UserPriceService {
         if(query.getString("productName") != null && query.getString("productName") != ""){
         	matchJson.put("productName", new JsonObject().put("$regex", query.getString("productName")));
         }
-		if(query.getDouble("miDiameterMax") != null || query.getDouble("miDiameterMin") != null){
+		if((query.getDouble("miDiameterMax") != null && query.getDouble("miDiameterMax") != 0) || (query.getDouble("miDiameterMin") != null && query.getDouble("miDiameterMin") != 0)){
         	JsonObject midiaMeter = new JsonObject();
         	if(query.getDouble("miDiameterMax") != null)midiaMeter.put("$lte", query.getDouble("miDiameterMax"));
         	if(query.getDouble("miDiameterMin") != null)midiaMeter.put("$gte", query.getDouble("miDiameterMin"));
         	matchJson.put("miDiameter", midiaMeter);
         }
-		if(query.getDouble("heightMax") != null || query.getDouble("heightMin") != null){
+		if((query.getDouble("heightMax") != null && query.getDouble("heightMax") != 0) || (query.getDouble("heightMin") != null && query.getDouble("heightMin") != 0)){
 			JsonObject height = new JsonObject();
         	if(query.getDouble("heightMax") != null)height.put("$lte", query.getDouble("heightMax"));
         	if(query.getDouble("heightMin") != null)height.put("$gte", query.getDouble("heightMin"));
         	matchJson.put("height", height);
         }
-		if(query.getDouble("crownMax") != null || query.getDouble("crownMin") != null){
+		if((query.getDouble("crownMax") != null && query.getDouble("crownMax") != 0)|| (query.getDouble("crownMin") != null&& query.getDouble("crownMin") != 0)){
 			JsonObject crown = new JsonObject();
         	if(query.getDouble("crownMax") != null)crown.put("$lte", query.getDouble("crownMax"));
         	if(query.getDouble("crownMin") != null)crown.put("$gte", query.getDouble("crownMin"));
