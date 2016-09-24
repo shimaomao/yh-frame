@@ -70,21 +70,37 @@ public class UserPriceConsumer extends PalmConsumer {
         				body.remove("breedName");
         				userPriceService.findProduct(body, thirdHandler ->{
         					result.put("result", thirdHandler);
+        					userPriceService.findProductTotal(body, resultTotalHandler ->{
+        		        		userPriceService.supplierTotal(body, supplierHandler ->{
+        		        			resultTotalHandler.add(new JsonObject().put("supplierTotal", supplierHandler.size()));
+        		        			result.put("count", resultTotalHandler);
+        		             		logger.debug("统计结果：{}",resultTotalHandler);
+        		             		handler.reply(result);        
+        		        		});
+        		        	  });
         				});
         			}else{
         				result.put("result", repeatHandler);
+        				userPriceService.findProductTotal(body, resultTotalHandler ->{
+        	        		userPriceService.supplierTotal(body, supplierHandler ->{
+        	        			resultTotalHandler.add(new JsonObject().put("supplierTotal", supplierHandler.size()));
+        	        			result.put("count", resultTotalHandler);
+        	             		logger.debug("统计结果：{}",resultTotalHandler);
+        	             		handler.reply(result);        
+        	        		});
+        	        	  });
         			}
         		});
-        	}
-        	userPriceService.findProductTotal(body, resultTotalHandler ->{
+        	}else{
+        		userPriceService.findProductTotal(body, resultTotalHandler ->{
         		userPriceService.supplierTotal(body, supplierHandler ->{
         			resultTotalHandler.add(new JsonObject().put("supplierTotal", supplierHandler.size()));
         			result.put("count", resultTotalHandler);
              		logger.debug("统计结果：{}",resultTotalHandler);
              		handler.reply(result);        
         		});
-        		
-        	});
+        	  });
+        	}
         });
     };
     

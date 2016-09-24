@@ -37,15 +37,15 @@ $(document).ready(function(){
 	    if (strDate >= 0 && strDate <= 9) {
 	        strDate = "0" + strDate;
 	    }
-	    var currentdate = year + seperator1 + month + seperator1 + strDate
-	            + " " + date.getHours() + seperator2 + date.getMinutes()
-	            + seperator2 + date.getSeconds();
+	    var currentdate = year + seperator1 + month + seperator1 + strDate;
 	    return currentdate;
     }
     
     /*****省份*********/
     $(function(){
     	$(".buttom_w").val(localStorage.getItem("areaNo"));
+    	var area = localStorage.getItem("area");
+    	$(".buttom_w").text(area == null?'选择省份':area);
         var div = $(".province dd em");
         var _initialize = 1001;
         for(var i= 0,max=div.length;i<max;i++){
@@ -69,36 +69,42 @@ $(document).ready(function(){
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
         $("[name=nn]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
         $("[name=aa]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
         $("[name=bb]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
         $("[name=cc]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
         $("[name=dd]").click(function(){
             $(".buttom_w").val($(this).val());
             $(".buttom_w").text($(this).text());
             $(".province").hide();
             localStorage.setItem("areaNo", $(this).val());
+            localStorage.setItem("area", $(this).text());
         })
     })
 
@@ -152,25 +158,25 @@ $(document).ready(function(){
                              +"</div>"
                              +"</td>"
                              +"<td>"
-                             +"胸径/米径"
+                             +"胸径/米径（cm）"
                              +"<div class='sort' data-name='midiaMeter' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
                              +"<td>"
-                             +"高度"
+                             +"高度（cm）"
                              +"<div class='sort' data-name='height' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
                              +"<td>"
-                             +"冠幅"
+                             +"冠幅（cm）"
                              +"<div class='sort' data-name='crown' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
                              +"<td>"
-                             +"上车价"
+                             +"上车价（元）"
                              +"<div class='sort' data-name='startingFare' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
@@ -182,7 +188,7 @@ $(document).ready(function(){
                              +"</div>"
                              +"</td>"
                              +"<td>"
-                             +"到货价"
+                             +"到货价（元）"
                              +"<div class='sort' data-name='totalPrice' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
@@ -231,7 +237,7 @@ $(document).ready(function(){
                               topDiv.eq(7).text(0);
                               topDiv.eq(8).text(0);
                               topDiv.eq(9).text(0);
-                    		$(".table-bordered").html(trhtml);
+                    		$("#itemContainer").html(trhtml);
                     	}else{
                         var count=data.count;
                         var topDiv = $(".fomr_top em");
@@ -300,16 +306,16 @@ $(document).ready(function(){
                                 + data[i].updateTime
                                 + "</td>"
                                 + "<td>"
-                                + "<a href='/price/freightPage/"+data[i].area+"' class='badge bg-red'>"
+                                + "<a href='/price/freightPage/"+data[i].area+"' target='view_window' class='badge bg-red'>"
                                 + "查询运费"
                                 + "</a>"
-                                + "<a href='"+data[i].details+"' class='badge bg-red'>"
+                                + "<a href='"+data[i].details+"' target='view_window' class='badge bg-red'>"
                                 + "详情"
                                 + "</a>"
                                 + "</td>"
                                 + "</tr>";
                         	}
-                        	$(".table-bordered").html(trhtml + liHTML);
+                        	$("#itemContainer").html(trhtml + liHTML);
                     	}
                        
                         //排序
@@ -348,12 +354,9 @@ $(document).ready(function(){
                           _decimal = _newstr/100;
                           var mm =(_decimal+1);//税后
                           for(var i= 0,max= data.length;i < max; i++){
-                              /* var bb=data[i].startingFar;*/
                               priceAll= data[i].startingFare*mm;
-                              /* var nn = Math.floor(priceAll*100)/100;*/
                               $("[name='decimal']").eq(i).html(priceAll.toFixed(2));
                           }
-                          /* alert(bb);*/
                       }
                       $("#taxRate").change(function(){
                           rate(data);
@@ -366,7 +369,7 @@ $(document).ready(function(){
         }
 
         //查询
-        $("#search").on("click",function(){
+        $("#search").click(function(){
         	_isPageInit = false;
             add(1,null,null);
             /*rate();*/
@@ -383,15 +386,11 @@ $(document).ready(function(){
             var filePath=$(this).val();
             console.log(filePath);
             if(filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
-                /*$(".fileerrorTip").html("").hide();*/
                 var arr=filePath.split('\\');
                 var fileName=arr[arr.length-1];
                 $(".showFileName").html(fileName);
-                /*$('#button').removeAttr("disabled",'true');*/
             }else{
                 $(".showFileName").html("上传文件类型有误！");
-                /*return false;*/
-                /*$("#uploading").attr('disabled','true');*/
                 return false;
             }
         })
@@ -417,16 +416,19 @@ $(document).ready(function(){
      				success : function(data) {
      					 $(".folder").hide();
      					if(data.code == 0){
+     						$(".main_form").hide();
      						var result = data.result;
      						 var excelHtml="<tr><th>序号</th><th>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
      						$(result).each(function(index){
      							    if(index ==0) return;
-     							 excelHtml+="<tr>"
+     							 excelHtml+="<tr name='a'>"
      								 +"<td>"
       	                             +index
       	                             +"</td>"
      	                             +"<td>"
+     	                             +"<a class='appoint'>"     	                          
      	                             +result[index].productName
+     	                             +"</a>"
      	                             +"</td>"
      	                             +"<td>"
     	                             +result[index].midiaMeter
@@ -440,6 +442,14 @@ $(document).ready(function(){
      	                             +"</tr>"
      						});
      						$("#excelTable").html(excelHtml);
+     						$(".appoint").click(function(){
+     							$("[name='breedName']").val($(this).text());
+     							var nextAll = $(this).parent().nextAll();
+     							$(nextAll).each(function(){
+     							   $.trim($(this).text());
+     							});
+     							$("#search").click();
+     						})
      					}else{
      						alert(data.msg);
      					}

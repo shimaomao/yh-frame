@@ -8,6 +8,8 @@ body {
     font-family: Arial,"宋体";
     font-size:12px;
     background:#fff !important;
+    max-width:1920px;
+    min-width:1336px;
     
 }
 em,i{
@@ -16,7 +18,7 @@ em,i{
 .war{
     margin-left: 220px;
     z-index: 1;
-    min-width:1200px;
+    min-width:1116px;
 }
 input[type=search]::-ms-clear{
     display: none;
