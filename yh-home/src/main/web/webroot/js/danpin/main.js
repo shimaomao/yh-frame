@@ -445,8 +445,54 @@ $(document).ready(function(){
      						$(".appoint").click(function(){
      							$("[name='breedName']").val($(this).text());
      							var nextAll = $(this).parent().nextAll();
-     							$(nextAll).each(function(){
-     							   $.trim($(this).text());
+     							$(nextAll).each(function(index){
+     							   var value = $.trim($(this).text());
+     							   var sear=new RegExp('--');
+     							   var arr = [];
+     							　　if(sear.test(value)){
+     								 arr = value.split('--');
+     							　　}else{
+     								 arr = value.split('-');
+     							　　}
+     							   if(index == 0){
+     								   if(arr.lenght<2){
+     									  $("[name='midiaMeterMin']").val(arr[0]);
+     								   }else{
+     									   if(arr[0]<arr[1]){
+     										  $("[name='midiaMeterMin']").val(arr[0]);
+     										  $("[name='midiaMeterMax']").val(arr[1]);
+     									   }else{
+     										  $("[name='midiaMeterMin']").val(arr[1]);
+     										  $("[name='midiaMeterMax']").val(arr[0]);
+     									   }
+     								   }
+     							   }
+     							   if(index == 1){
+     								  if(arr.lenght<2){
+     									  $("[name='heightMin']").val(arr[0]);
+     								   }else{
+     									   if(arr[0]<arr[1]){
+     										  $("[name='heightMin']").val(arr[0]);
+     										  $("[name='heightMax']").val(arr[1]);
+     									   }else{
+     										  $("[name='heightMin']").val(arr[1]);
+     										  $("[name='heightMax']").val(arr[0]);
+     									   }
+     								   }
+     							   }
+     							  if(index == 2){
+     								 if(arr.lenght<2){
+    									  $("[name='crownMin']").val(arr[0]);
+    								   }else{
+    									   if(arr[0]<arr[1]){
+    										  $("[name='crownMin']").val(arr[0]);
+    										  $("[name='crownMax']").val(arr[1]);
+    									   }else{
+    										  $("[name='crownMin']").val(arr[1]);
+    										  $("[name='crownMax']").val(arr[0]);
+    									   }
+    								   }
+    							   }
      							});
      							$("#search").click();
      						})

@@ -348,11 +348,11 @@ public class UserPriceServiceImpl implements UserPriceService {
         if(query.getString("productName") != null && query.getString("productName") != ""){
         	matchJson.put("productName", new JsonObject().put("$regex", query.getString("productName")));
         }
-		if(query.getDouble("midiaMeterMax") != null || query.getDouble("midiaMeterMin") != null){
+		if(query.getDouble("miDiameterMax") != null || query.getDouble("miDiameterMin") != null){
         	JsonObject midiaMeter = new JsonObject();
-        	if(query.getDouble("midiaMeterMax") != null)midiaMeter.put("$lte", query.getDouble("midiaMeterMax"));
-        	if(query.getDouble("midiaMeterMin") != null)midiaMeter.put("$gte", query.getDouble("midiaMeterMin"));
-        	matchJson.put("midiaMeter", midiaMeter);
+        	if(query.getDouble("miDiameterMax") != null)midiaMeter.put("$lte", query.getDouble("miDiameterMax"));
+        	if(query.getDouble("miDiameterMin") != null)midiaMeter.put("$gte", query.getDouble("miDiameterMin"));
+        	matchJson.put("miDiameter", midiaMeter);
         }
 		if(query.getDouble("heightMax") != null || query.getDouble("heightMin") != null){
 			JsonObject height = new JsonObject();
