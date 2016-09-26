@@ -34,14 +34,14 @@ $(document).ready(function(){
                 var Nun = "";
                 Nun = parseFloat(output);
                 //计算费用
-                var freightMin = 10;//5.2米货车每公里的费用最少
-                var freightMax = 22; //5.2米货车每公里费用最多
-                var freightSecondMin = 30;//9.6米货车每公里的费用
-                var freightSecondMax = 40; //9.6米货车每公里费用
-                var freightThirdlyMin = 50;//13.5米货车每公里的费用
-                var freightThirdlyMax = 60; //13.5米货车每公里费用
-                var freightFourthlyMin = 70;//17.5米货车每公里的费用
-                var freightFourthlyMax = 80; //17.5米货车每公里费用
+                var freightMin = 5;//5.2米货车每公里的费用最少
+                var freightMax = 7; //5.2米货车每公里费用最多
+                var freightSecondMin = 7.5;//9.6米货车每公里的费用
+                var freightSecondMax = 9.5; //9.6米货车每公里费用
+                var freightThirdlyMin = 9;//13.5米货车每公里的费用
+                var freightThirdlyMax = 11; //13.5米货车每公里费用
+                var freightFourthlyMin = 10.5;//17.5米货车每公里的费用
+                var freightFourthlyMax = 13; //17.5米货车每公里费用
                 var fMin = "";//5.2
                 var fMax = "";//5.2
                 var fSMin = "";//9.6

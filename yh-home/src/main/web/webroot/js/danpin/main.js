@@ -156,7 +156,7 @@ $(document).ready(function(){
         }
         
         function add(page,sortField,sort){
-	        	if($(".buttom_w").val().trim() == ''){
+	        	if($(".buttom_w").val() == ''){
 	        		alert("请选择地区");
 	        		return;
 	        	}
@@ -176,19 +176,19 @@ $(document).ready(function(){
                              +"</td>"
                              +"<td>"
                              +"胸径/米径（cm）"
-                             +"<div class='sort' data-name='midiaMeter' data-sort='1'>"
+                             +"<div class='sort' data-name='miDiameterMin' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
                              +"<td>"
                              +"高度（cm）"
-                             +"<div class='sort' data-name='height' data-sort='1'>"
+                             +"<div class='sort' data-name='heightMin' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
                              +"<td>"
                              +"冠幅（cm）"
-                             +"<div class='sort' data-name='crown' data-sort='1'>"
+                             +"<div class='sort' data-name='crownMin' data-sort='1'>"
                              +"<img src='../images/paixun.png'>"
                              +"</div>"
                              +"</td>"
@@ -286,13 +286,13 @@ $(document).ready(function(){
                                 + data[i].productName
                                 + "</td>"
                                 + "<td>"
-                                + data[i].miDiameter
+                                + judge(data[i].miDiameterMax,data[i].miDiameterMin)
                                 + "</td>"
                                 + "<td>"
-                                + data[i].height
+                                + judge(data[i].heightMax,data[i].heightMin)
                                 + "</td>"
                                 + "<td>"
-                                + data[i].crown
+                                + judge(data[i].crownMax,data[i].crownMin)
                                 + "</td>"
                                 + "<td name='decimal'>"
                                 + /*data[i].startingFare*/decimal
@@ -334,7 +334,18 @@ $(document).ready(function(){
                         	}
                         	$("#itemContainer").html(trhtml + liHTML);
                     	}
-                       
+                        //组装
+                        function judge(num1,num2){
+                            if(num1 == 0 && num2 == 0 ){
+                                return "";
+                            }
+                            if(num1== num2){
+                                return num1;
+                            }
+                            else {
+                                return num2+"-"+num1;
+                            }
+                        }
                         //排序
                         $(".sort").click(function(){
                     		add(page,$(this).data("name"),$(this).data("sort"));
@@ -342,7 +353,20 @@ $(document).ready(function(){
                     		sessionStorage.setItem("sort", $(this).data("sort") == 1?-1:1);
                         })
                         if(sessionStorage.getItem("sortName") != null && sessionStorage.getItem("sort") != null){
-                        	$("[data-name='"+sessionStorage.getItem("sortName")+"']").attr("data-sort",sessionStorage.getItem("sort"));
+                        	/*$("[data-name='"+sessionStorage.getItem("sortName")+"']").attr("data-sort",sessionStorage.getItem("sort"));*/
+                            var Max=new RegExp('Max');
+                            var Min=new RegExp('Min');
+                            var name= sessionStorage.getItem("sortName");
+                            if(sessionStorage.getItem("sortName"))
+                                $("[data-name='"+name+"']").attr("data-sort",sessionStorage.getItem("sort"));
+                            if(Max.test(name)){
+                                var new_name=name.replace("Max","Min");
+                                $("[data-name='"+name+"']").attr("data-name",new_name);
+                            }
+                            if(Min.test(name)){
+                                var new_name=name.replace("Min","Max");
+                                $("[data-name='"+name+"']").attr("data-name",new_name);
+                            }
                         }
                         	
 
@@ -406,10 +430,16 @@ $(document).ready(function(){
                 var arr=filePath.split('\\');
                 var fileName=arr[arr.length-1];
                 $(".showFileName").html(fileName);
+                $(".showFileName").css({"color":"#888"})
             }else{
                 $(".showFileName").html("上传文件类型有误！");
+                $(".showFileName").css({"color":"#f00"})
                 return false;
             }
+        })
+        
+        $(".folder_cancel").click(function(){
+            $(".folder").hide();
         })
 
         /******上传excel文件*****/
@@ -466,11 +496,10 @@ $(document).ready(function(){
      							   var value = $.trim($(this).text());
      							   var sear=new RegExp('--');
      							   var arr = [];
-     							　　if(sear.test(value)){
+                                    if(sear.test(value)){
      								 arr = value.split('--');
-     							　　}else{
-     								 arr = value.split('-');
-     							　　}
+                                    }else{
+     								 arr = value.split('-');    							　　}
      							   if(index == 0){
      								   if(arr.lenght<2){
      									  $("[name='midiaMeterMin']").val(arr[0]);

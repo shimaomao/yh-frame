@@ -33,11 +33,11 @@
 }
 .allmap{
     padding:0 80px;
-    height:500px;
+    margin-bottom: 30px;
     margin-top:30px;
     display: none;
 }
-#allmap{height:500px;width:100%;}
+#allmap{height:800px;width:100%;}
 #r-result,#r-result table{width:100%;}
 .input_w{
     padding:0 12px !important;
