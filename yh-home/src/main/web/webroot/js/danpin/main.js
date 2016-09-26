@@ -17,6 +17,23 @@ $(document).ready(function(){
         $(".fomr_type li").last().css({"border-right":"none"})
     })
     
+    /****清空*****/
+    $("#empty").click(function(){
+    	  $("[name=breedName]").val('');
+    	  $("[name=midiaMeterMin]").val('');
+    	  $("[name=midiaMeterMax]").val('');
+    	  $("[name=updateTimeMin]").val('');
+    	  $("[name=updateTimeMax]").val('');
+    	  $("[name=heightMin]").val('');
+    	  $("[name=heightMax]").val('');
+    	  $("[name=crownMin]").val('');
+    	  $("[name=crownMax]").val('');
+    	  var date = new Date();
+     	  $('#time2').val(getNowFormatDate(date));
+     	  date.setDate(date.getDate() - 59);
+     	  $('#time').val(getNowFormatDate(date));
+    });
+    
     /*****设置时间*********/
     $(function(){
     	 var date = new Date();
@@ -400,12 +417,12 @@ $(document).ready(function(){
         	var file = $("#file").val();
      		//如果文件为空
      		if (file == '') {
-     			alert('请上传excel文件!');
+     			$(".showFileName").html('请上传excel文件!');
      			return;
      		}
      		//如果文件不是xls或者xlsx 提示输入正确的excel文件
     		if ((file.indexOf('.xls') == -1 && file.indexOf('.xlsx') == -1)) {
-    			alert('请上传正确的excel,后缀名为xls或xlsx!');
+    			$(".showFileName").html('请上传正确的excel,后缀名为xls或xlsx!');
     			return;
     		}
      		var option = {
@@ -497,7 +514,7 @@ $(document).ready(function(){
      							$("#search").click();
      						})
      					}else{
-     						alert(data.msg);
+     						$(".showFileName").html(data.msg);
      					}
      				}
      		};
