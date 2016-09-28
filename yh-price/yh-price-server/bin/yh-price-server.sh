@@ -72,7 +72,7 @@ start() {
       echo "warn: $APP_NAME already started! [pid=$psid]"
    else
       #java虚拟机启动参数
-      JAVA_OPTS=" -D$APP_NAME -XX:InitialHeapSize=64m -XX:MaxHeapSize=64m -Dfile.encoding=UTF-8 -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory -Djava.net.preferIPv4Stack=true -javaagent:/opt/jolokia/jolokia-jvm-1.3.3-agent.jar=port=13003,host=localhost"
+      JAVA_OPTS=" -D$APP_NAME -Xmx64M -Xms64M -XX:InitialHeapSize=64m -XX:MaxHeapSize=64m -Dfile.encoding=UTF-8 -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory -Djava.net.preferIPv4Stack=true -javaagent:/opt/jolokia/jolokia-jvm-1.3.3-agent.jar=port=13003,host=localhost"
       #拼凑完整的classpath参数，包括指定lib目录下所有的jar
       for i in "$APP_HOME"/lib/*.jar;
       do 
