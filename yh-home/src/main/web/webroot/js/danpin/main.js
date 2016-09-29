@@ -11,6 +11,18 @@ $(document).ready(function(){
             $(this).parent("dl").siblings("em").text($(this).text());
             $(this).parent("dl").hide();
         })
+        function add(){
+            if($(window).width()<=1440){
+                $(".box-body").addClass("box-body_on")
+                $(".table_box").css({"min-width":"1920px","_min-width":"1920px"})
+            }else{
+                $(".box-body").removeClass("box-body_on")
+            }
+        }
+        add();
+        $(window).resize(function(){
+            add();
+        })
     })
 
     $(function(){
@@ -45,18 +57,51 @@ $(document).ready(function(){
 	    var date = Date;
 	    var seperator1 = "-";
 	    var seperator2 = ":";
-	    var year = date.getFullYear();
-	    var month = date.getMonth() + 1;
-	    var strDate = date.getDate();
-	    if (month >= 1 && month <= 9) {
-	        month = "0" + month;
-	    }
+	    var year = date.getFullYear();//年份
+	    var month = date.getMonth() + 1;//月份
+	    var strDate = date.getDate();//日
+        var hours = date.getHours();//小时
+        var minutes= date.getMinutes();
+        var Seconds = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
 	    if (strDate >= 0 && strDate <= 9) {
 	        strDate = "0" + strDate;
 	    }
 	    var currentdate = year + seperator1 + month + seperator1 + strDate;
 	    return currentdate;
     }
+
+    /**********省份************/
+    /*$(function(){
+        $.ajax({
+            url:"../json/json.json",
+            dataType : "json",
+            clearForm: true,
+            success:function(data){
+                var data = data.result;
+                var arr1 = [];
+                var arr2 = [];
+                var arr3 = [];
+                $.each(data,function (index){
+                    if(data[index].areaNo.length==4){
+                       arr1.push(data[index]);
+                    }else{
+                       arr2.push(data[index]);
+                    }
+
+                });
+                $("[name=areaNo]").each(function(i){
+                    $(this).click(function(){
+                        $(this).val(arr1[i].areaNo);
+                        alert($(this).val())
+                    })
+                })
+            }
+        })
+
+    })*/
     
     /*****省份*********/
     $(function(){
@@ -149,74 +194,58 @@ $(document).ready(function(){
                       invoiceType:selectDiv.eq(1).val(),
                       skip:page,
                       limit:_pageSize,
-                      sortField:sortField,
-                      sort:sort
+                      sortField:sortField /*!= ''?sortField:sessionStorage.getItem("sortName")*/,
+                      sort:sort/* != ''?sort:sessionStorage.getItem("sort")*/,
                   };
         	  return param;
         }
         
         function add(page,sortField,sort){
-	        	if($(".buttom_w").val() == ''){
+	        	/*if($(".buttom_w").val() == ''){
 	        		alert("请选择地区");
 	        		return;
-	        	}
+	        	}*/
                 $.ajax({
                     type: 'POST',
                     url: "/price/findProduct",
-                    data: {"param" : JSON.stringify(getParam(page,sortField,sort))},
+                    data: {"param" : JSON.stringify(getParam(page,sortField,sort))},//提交数据到服务器
                     dataType: "json",
                     success: function(data){
                     	 var trhtml="";
-                         trhtml+="<tr>"
+                         trhtml+="<tr class='height_tr'>"
                              +"<td>"
                              +"产品名称"
-                             +"<div class='sort' data-name='breedName' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='breedName' data-sort='-1'>升序排列</li><li class='aa' data-name='breedName' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"胸径/米径（cm）"
-                             +"<div class='sort' data-name='miDiameterMin' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='miDiameterMax' data-sort='-1'>从大到小</li><li class='aa' data-name='miDiameterMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"高度（cm）"
-                             +"<div class='sort' data-name='heightMin' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='heightMax' data-sort='-1'>从大到小</li><li class='aa' data-name='heightMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"冠幅（cm）"
-                             +"<div class='sort' data-name='crownMin' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='crownMax' data-sort='-1'>从大到小</li><li class='aa' data-name='crownMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"上车价（元）"
-                             +"<div class='sort' data-name='startingFare' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='startingFare' data-sort='-1'>从高到低</li><li class='aa' data-name='startingFare' data-sort='1'>从低到高</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"发票类型"
-                             +"<div class='sort' data-name='invoiceType' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='invoiceType' data-sort='-1'>升序排列</li><li class='aa' data-name='invoiceType' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"到货价（元）"
-                             +"<div class='sort' data-name='totalPrice' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='totalPrice' data-sort='-1'>从高到低</li><li class='aa' data-name='totalPrice' data-sort='1'>从低到高</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"地区"
-                             +"<div class='sort' data-name='areaNo' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='areaNo' data-sort='-1'>升序排列</li><li class='aa' data-name='areaNo' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td class='tabel_td'>"
                              +"供应商"
                              +"</td>"
                              +"<td>"
@@ -227,15 +256,11 @@ $(document).ready(function(){
                              +"</td>"
                              +"<td>"
                              +"数据源"
-                             +"<div class='sort' data-name='source' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='source' data-sort='-1'>升序排列</li><li class='aa' data-name='source' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"更新时间"
-                             +"<div class='sort' data-name='updateTime' data-sort='1'>"
-                             +"<img src='../images/paixun.png'>"
-                             +"</div>"
+                             +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='updateTime' data-sort='-1'>从远到近</li><li class='aa' data-name='updateTime' data-sort='1'>从近到远</li></ul></div></div>"
                              +"</td>"
                              +"<td>"
                              +"操作"
@@ -276,10 +301,10 @@ $(document).ready(function(){
                         _price = $("#taxRate").val();
                         var _newstr=_price.replace(/%/, "");
                         _decimal = _newstr/100;
-                        var tax =(_decimal+1);//税后
+                        var mm =(_decimal+1);//税后
 
                         for (var i= 0,max= data.length;i < max; i++ ) {
-                            priceAll= data[i].startingFare*tax;
+                            priceAll= data[i].startingFare*mm;
                             var decimal = priceAll.toFixed(2)
                             liHTML += "<tr>"
                                 + "<td>"
@@ -305,7 +330,6 @@ $(document).ready(function(){
                                 + "</td>"
                                 + "<td>"
                                 + data[i].area
-                                + "</td>"
                                 + "</td>"
                                 + "<td>"
                                 + data[i].supplier
@@ -347,18 +371,33 @@ $(document).ready(function(){
                             }
                         }
                         //排序
+                        var height = $(".height_tr").height();
+                        $(".rank").css({"top":height})
                         $(".sort").click(function(){
-                    		add(page,$(this).data("name"),$(this).data("sort"));
-                    		sessionStorage.setItem("sortName", $(this).data("name"));
-                    		sessionStorage.setItem("sort", $(this).data("sort") == 1?-1:1);
+                            $(this).children(".rank").toggle();
                         })
-                        if(sessionStorage.getItem("sortName") != null && sessionStorage.getItem("sort") != null){
-                        	/*$("[data-name='"+sessionStorage.getItem("sortName")+"']").attr("data-sort",sessionStorage.getItem("sort"));*/
+                        $("ul .aa").click(function(){
+                            /*var _sortName = $(this).data("name");
+                            var _sort = $(this).data("sort");*/
+                            /*sessionStorage.setItem("sortName", $(this).data("name"));
+                            sessionStorage.setItem("sort", $(this).data("sort"));*/
+                            add(page,$(this).data("name"),$(this).data("sort"));
+                            /*$(this).parents(".rank").attr("data-name",_sortName);*/
+                            /*sessionStorage.setItem("sortName", $("#excelDivBox").data("name"));
+                            sessionStorage.setItem("sort", $("#excelDivBox").data("sort"));*/
+                            $("#excelDivBox").attr("name",$(this).data("name"));
+                            $("#excelDivBox").val($(this).data("sort"));
+                        })
+                        /*if(sessionStorage.getItem("sortName") != null && sessionStorage.getItem("sort") != null){
+                        	/!*$("[data-name='"+sessionStorage.getItem("sortName")+"']").attr("data-sort",sessionStorage.getItem("sort"));*!/
                             var Max=new RegExp('Max');
                             var Min=new RegExp('Min');
-                            var name= sessionStorage.getItem("sortName");
-                            if(sessionStorage.getItem("sortName"))
+                            var name= sessionStorage.getItem($(this).data("name"));
+                           /!* if(sessionStorage.getItem("sortName"))
+                            {
+
                                 $("[data-name='"+name+"']").attr("data-sort",sessionStorage.getItem("sort"));
+                            }*!/
                             if(Max.test(name)){
                                 var new_name=name.replace("Max","Min");
                                 $("[data-name='"+name+"']").attr("data-name",new_name);
@@ -366,9 +405,15 @@ $(document).ready(function(){
                             if(Min.test(name)){
                                 var new_name=name.replace("Min","Max");
                                 $("[data-name='"+name+"']").attr("data-name",new_name);
+                            }/!*
+                            i
+                            if(sort==1){
+                                $(".sort").addClass("sort_on")
                             }
-                        }
-                        	
+                            if(sort==-1){
+                                $(".sort").removeClass("sort_on");
+                            }*!/
+                        }*/
 
                         /*****分页初始化*****/
                         if(!_isPageInit){
@@ -380,7 +425,16 @@ $(document).ready(function(){
                                 next_text: "下一页",
                                 callback:function(page){
                                     /*console.log("" + page);*/
-                                    add(page);
+                                   /* add(page);*/
+                                    var bb = "", aa = "";
+                                    if($("#excelDivBox").attr("name") != null && $("#excelDivBox").val() != null){
+                                        bb = $("#excelDivBox").attr("name");
+                                        aa = parseInt($("#excelDivBox").val());
+                                    }else{
+                                        bb = sortField;
+                                        aa = sort;
+                                    }
+                                    add(page,bb,aa);
                                 }
                             });
                             _isPageInit = true;
@@ -388,14 +442,14 @@ $(document).ready(function(){
                       
                   	  /****税率***/
                       function rate(data) {
-                          var _priceAl = "";//税率
+                         /* var _priceAl = "";//税率
                           var _price = " ";//税率
                           _price = $("#taxRate").val();
                           var _newstr=_price.replace(/%/, "");
                           _decimal = _newstr/100;
-                          var mm =(_decimal+1);//税后
+                          var mm =(_decimal+1);//税后*/
                           for(var i= 0,max= data.length;i < max; i++){
-                              priceAll= data[i].startingFare*mm;
+                              var priceAll= data[i].startingFare*mm;
                               $("[name='decimal']").eq(i).html(priceAll.toFixed(2));
                           }
                       }

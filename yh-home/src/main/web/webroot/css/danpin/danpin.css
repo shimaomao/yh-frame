@@ -1,7 +1,6 @@
 .input_w{
   max-width:140px;
   padding:0 12px !important;
-  width:113px !important;
 }
 .buttom_w{
   max-width:298px;
@@ -55,6 +54,7 @@
 .main_form{
   padding:0 10px;
   display: none;
+  margin:0 50px;
 }
 .fomr_top{
   font-size:16px;
@@ -143,7 +143,7 @@
   margin-left: 5px;
   display: inline-block;
   cursor: pointer;
-  float: right;
+  vertical-align: middle;
   zoom: 1;
   z-index: auto;
 }
@@ -154,6 +154,14 @@
 }
 .box-body a{
   margin:0 5px;
+  padding:5px;
+}
+.box-body_on{
+  overflow-x: scroll;
+  overflow: hidden;
+  overflow-x: auto;
+  width: 1336px;
+  margin: 0 auto;
 }
 body{
   max-height:100% !important;
@@ -165,9 +173,9 @@ body{
 	width:100%;
 }
 .excelStoll{
-	width:100%;
+	margin:0 50px;
 	overflow-y:auto;
-	overflow:hidde;
+	/*overflow:hidden;*/
 	height:450px;
 }
 .excelStoll a{
@@ -175,5 +183,36 @@ body{
 }
 
 .table td{
-  padding:8px 5px !important;
+  position: relative;
+  vertical-align: middle !important;
+  text-align: center;
 }
+.tabel_td{
+  width: 220px;
+}
+.rank{
+  position:absolute;
+  top: -1px;
+  left:-1px;
+  z-index: 2;
+  background: #fff;
+  width: 100%;
+  display: none;
+}
+.rank ul{
+  display: block;
+  border:solid 1px #ddd;
+  border-bottom: none;
+}
+.rank li{
+  width: 100%;
+  line-height:30px;
+  font-size: 12px;
+  padding:0 8px;
+  border-bottom:solid 1px #ddd;
+}
+.rank li:hover{
+  color: #f00;
+
+}
+
