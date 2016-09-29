@@ -371,10 +371,12 @@ $(document).ready(function(){
                             }
                         }
                         //排序
-                        var height = $(".height_tr").height();
-                        $(".rank").css({"top":height})
-                        $(".sort").click(function(){
-                            $(this).children(".rank").toggle();
+                        /*var height = $(".height_tr").height();
+                        $(".rank").css({"top":height})*/
+                        $(".sort").hover(function(){
+                            $(this).children(".rank").show();
+                        },function(){
+                            $(this).children(".rank").hide();
                         })
                         $("ul .aa").click(function(){
                             /*var _sortName = $(this).data("name");
@@ -434,7 +436,7 @@ $(document).ready(function(){
                                         bb = sortField;
                                         aa = sort;
                                     }
-                                    add(page,bb,aa);
+                                    add(page+1,bb,aa);
                                 }
                             });
                             _isPageInit = true;

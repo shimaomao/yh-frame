@@ -23,14 +23,15 @@ ul {
     margin-bottom: 20px;
     height: 40px; }
     .seek_list li label {
-      width: 90px;
+      width: 80px;
       display: inline;
-      text-align: right;
-      font-size: 12px;
+      text-align: left;
+      font-size: 14px;
       height: 40px;
       line-height: 40px;
       font-size:14px;
-      float: left; }
+      float: left;
+      margin-left: 30px;}
     .seek_list li input {
       display: inline-block;
       /*border:solid 1px #333;*/
@@ -122,7 +123,7 @@ ul {
       width: 100px;
       display: inline;
       text-align: right;
-      font-size: 12px;
+      font-size: 14px;
       height: 40px;
       line-height: 40px;
       float: left; }
