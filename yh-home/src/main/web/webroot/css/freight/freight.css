@@ -21,8 +21,8 @@
     display: inline-block;
 }
 .distanceCost{
-    padding:0 80px;
     display: none;
+    margin-left:80px;
 }
 .distance{
     font-size: 16px;
