@@ -444,12 +444,12 @@ $(document).ready(function(){
                       
                   	  /****税率***/
                       function rate(data) {
-                         /* var _priceAl = "";//税率
+                          var _priceAl = "";//税率
                           var _price = " ";//税率
                           _price = $("#taxRate").val();
                           var _newstr=_price.replace(/%/, "");
                           _decimal = _newstr/100;
-                          var mm =(_decimal+1);//税后*/
+                          var mm =(_decimal+1);//税后
                           for(var i= 0,max= data.length;i < max; i++){
                               var priceAll= data[i].startingFare*mm;
                               $("[name='decimal']").eq(i).html(priceAll.toFixed(2));
@@ -485,17 +485,114 @@ $(document).ready(function(){
             if(filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
                 var arr=filePath.split('\\');
                 var fileName=arr[arr.length-1];
-                $(".showFileName").html(fileName);
-                $(".showFileName").css({"color":"#888"})
             }else{
                 $(".showFileName").html("上传文件类型有误！");
-                $(".showFileName").css({"color":"#f00"})
                 return false;
             }
-        })
-        
-        $(".folder_cancel").click(function(){
-            $(".folder").hide();
+            /*if (file == '') {
+                $(".showFileName").html('请上传excel文件!');
+                return;
+            }*/
+            //如果文件不是xls或者xlsx 提示输入正确的excel文件
+            /*if ((file.indexOf('.xls') == -1 && file.indexOf('.xlsx') == -1)) {
+                $(".showFileName").html('请上传正确的excel,后缀名为xls或xlsx!');
+                return;
+            }*/
+            if(filePath != null){
+                $(".showFileName").html(null);
+                var option = {
+                    url : "/price/excelData",
+                    type : 'POST',
+                    dataType : "json",
+                    clearForm: true,
+                    success : function(data) {
+                        if(data.code == 0){
+                            $(".main_form").hide();
+                            var result = data.result;
+                            var excelHtml="<tr><th>序号</th><th>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
+                            $(result).each(function(index){
+                                if(index ==0) return;
+                                excelHtml+="<tr name='a'>"
+                                    +"<td>"
+                                    +index
+                                    +"</td>"
+                                    +"<td>"
+                                    +"<a class='appoint'>"
+                                    +result[index].productName
+                                    +"</a>"
+                                    +"</td>"
+                                    +"<td>"
+                                    +result[index].midiaMeter
+                                    +"</td>"
+                                    +"<td>"
+                                    +result[index].height
+                                    +"</td>"
+                                    +"<td>"
+                                    +result[index].crown
+                                    +"</td>"
+                                    +"</tr>"
+                            });
+                            $("#excelTable").html(excelHtml);
+                            $(".appoint").click(function(){
+                                $("[name='breedName']").val($(this).text());
+                                var nextAll = $(this).parent().nextAll();
+                                $(nextAll).each(function(index){
+                                    var value = $.trim($(this).text());
+                                    var sear=new RegExp('--');
+                                    var arr = [];
+                                    if(sear.test(value)){
+                                        arr = value.split('--');
+                                    }else{
+                                        arr = value.split('-');    							　　}
+                                    if(index == 0){
+                                        if(arr.lenght<2){
+                                            $("[name='midiaMeterMin']").val(arr[0]);
+                                        }else{
+                                            if(arr[0]<arr[1]){
+                                                $("[name='midiaMeterMin']").val(arr[0]);
+                                                $("[name='midiaMeterMax']").val(arr[1]);
+                                            }else{
+                                                $("[name='midiaMeterMin']").val(arr[1]);
+                                                $("[name='midiaMeterMax']").val(arr[0]);
+                                            }
+                                        }
+                                    }
+                                    if(index == 1){
+                                        if(arr.lenght<2){
+                                            $("[name='heightMin']").val(arr[0]);
+                                        }else{
+                                            if(arr[0]<arr[1]){
+                                                $("[name='heightMin']").val(arr[0]);
+                                                $("[name='heightMax']").val(arr[1]);
+                                            }else{
+                                                $("[name='heightMin']").val(arr[1]);
+                                                $("[name='heightMax']").val(arr[0]);
+                                            }
+                                        }
+                                    }
+                                    if(index == 2){
+                                        if(arr.lenght<2){
+                                            $("[name='crownMin']").val(arr[0]);
+                                        }else{
+                                            if(arr[0]<arr[1]){
+                                                $("[name='crownMin']").val(arr[0]);
+                                                $("[name='crownMax']").val(arr[1]);
+                                            }else{
+                                                $("[name='crownMin']").val(arr[1]);
+                                                $("[name='crownMax']").val(arr[0]);
+                                            }
+                                        }
+                                    }
+                                });
+                                $("#search").click();
+                            })
+                        }else{
+                            $(".showFileName").html(data.msg);
+                        }
+                    }
+                };
+                $("#excelUpload").ajaxSubmit(option);
+            }
         })
 
         /******上传excel文件*****/
@@ -511,106 +608,9 @@ $(document).ready(function(){
     			$(".showFileName").html('请上传正确的excel,后缀名为xls或xlsx!');
     			return;
     		}
-     		var option = {
-     				url : "/price/excelData",
-     				type : 'POST',
-     				dataType : "json",
-     				clearForm: true,
-     				success : function(data) {
-     					 $(".folder").hide();
-     					if(data.code == 0){
-     						$(".main_form").hide();
-     						var result = data.result;
-     						 var excelHtml="<tr><th>序号</th><th>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
-     						$(result).each(function(index){
-     							    if(index ==0) return;
-     							 excelHtml+="<tr name='a'>"
-     								 +"<td>"
-      	                             +index
-      	                             +"</td>"
-     	                             +"<td>"
-     	                             +"<a class='appoint'>"     	                          
-     	                             +result[index].productName
-     	                             +"</a>"
-     	                             +"</td>"
-     	                             +"<td>"
-    	                             +result[index].midiaMeter
-    	                             +"</td>"
-    	                             +"<td>"
-     	                             +result[index].height
-     	                             +"</td>"
-     	                             +"<td>"
-    	                             +result[index].crown
-    	                             +"</td>"
-     	                             +"</tr>"
-     						});
-     						$("#excelTable").html(excelHtml);
-     						$(".appoint").click(function(){
-     							$("[name='breedName']").val($(this).text());
-     							var nextAll = $(this).parent().nextAll();
-     							$(nextAll).each(function(index){
-     							   var value = $.trim($(this).text());
-     							   var sear=new RegExp('--');
-     							   var arr = [];
-                                    if(sear.test(value)){
-     								 arr = value.split('--');
-                                    }else{
-     								 arr = value.split('-');    							　　}
-     							   if(index == 0){
-     								   if(arr.lenght<2){
-     									  $("[name='midiaMeterMin']").val(arr[0]);
-     								   }else{
-     									   if(arr[0]<arr[1]){
-     										  $("[name='midiaMeterMin']").val(arr[0]);
-     										  $("[name='midiaMeterMax']").val(arr[1]);
-     									   }else{
-     										  $("[name='midiaMeterMin']").val(arr[1]);
-     										  $("[name='midiaMeterMax']").val(arr[0]);
-     									   }
-     								   }
-     							   }
-     							   if(index == 1){
-     								  if(arr.lenght<2){
-     									  $("[name='heightMin']").val(arr[0]);
-     								   }else{
-     									   if(arr[0]<arr[1]){
-     										  $("[name='heightMin']").val(arr[0]);
-     										  $("[name='heightMax']").val(arr[1]);
-     									   }else{
-     										  $("[name='heightMin']").val(arr[1]);
-     										  $("[name='heightMax']").val(arr[0]);
-     									   }
-     								   }
-     							   }
-     							  if(index == 2){
-     								 if(arr.lenght<2){
-    									  $("[name='crownMin']").val(arr[0]);
-    								   }else{
-    									   if(arr[0]<arr[1]){
-    										  $("[name='crownMin']").val(arr[0]);
-    										  $("[name='crownMax']").val(arr[1]);
-    									   }else{
-    										  $("[name='crownMin']").val(arr[1]);
-    										  $("[name='crownMax']").val(arr[0]);
-    									   }
-    								   }
-    							   }
-     							});
-     							$("#search").click();
-     						})
-     					}else{
-     						$(".showFileName").html(data.msg);
-     					}
-     				}
-     		};
-     		$("#excelUpload").ajaxSubmit(option);
      		return false;
-     		
+
          });
-        $("#excel").on("click",function(){
-            $(".folder").show();
-        })
-       
     })
 
 })

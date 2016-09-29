@@ -77,30 +77,34 @@
   border: 1px solid #ddd;
 }
 .folder{
-  height: 40px;
-  border:solid 1px #ccc;
+  height: 35px;
+  display: inline-block;
   background: #fff;
   text-align: center;
-  display: none;
-  position:absolute;
+  border-radius:5px;
+  vertical-align: middle;
+  padding-left:60px;
+  position: relative;
+}
+.showFileName{
+  position: absolute;
   top:0;
   left:150px;
-  border-radius:5px;
-  min-width: 430px;
+  display: inline-block;
+  line-height: 35px;
+  color: #f00;
+  width: 100%;
 }
 .a-upload {
-  padding: 10px 30px;
   position: relative;
   cursor: pointer;
   color: #888;
-  /* background: #fafafa; */
-  /* border: 1px solid #ddd; */
   border-radius: 4px;
   overflow: hidden;
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  float:left;
+  display: block;
 }
 
 .a-upload  input {
