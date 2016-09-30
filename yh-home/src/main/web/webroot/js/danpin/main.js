@@ -14,7 +14,7 @@ $(document).ready(function(){
         function add(){
             if($(window).width()<=1440){
                 $(".box-body").addClass("box-body_on")
-                $(".table_box").css({"min-width":"1920px","_min-width":"1920px"})
+                $(".table_box").css({"min-width":"1620px"})
             }else{
                 $(".box-body").removeClass("box-body_on")
             }
@@ -213,35 +213,35 @@ $(document).ready(function(){
                     success: function(data){
                     	 var trhtml="";
                          trhtml+="<tr class='height_tr'>"
-                             +"<td>"
+                             +"<td style='width:95px;'>"
                              +"产品名称"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='breedName' data-sort='-1'>升序排列</li><li class='aa' data-name='breedName' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:150px;'>"
                              +"胸径/米径（cm）"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='miDiameterMax' data-sort='-1'>从大到小</li><li class='aa' data-name='miDiameterMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:115px;'>"
                              +"高度（cm）"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='heightMax' data-sort='-1'>从大到小</li><li class='aa' data-name='heightMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:115px;'>"
                              +"冠幅（cm）"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='crownMax' data-sort='-1'>从大到小</li><li class='aa' data-name='crownMin' data-sort='1'>从小到大</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:125px;'>"
                              +"上车价（元）"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='startingFare' data-sort='-1'>从高到低</li><li class='aa' data-name='startingFare' data-sort='1'>从低到高</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:95px;'>"
                              +"发票类型"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='invoiceType' data-sort='-1'>升序排列</li><li class='aa' data-name='invoiceType' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:125px;'>"
                              +"到货价（元）"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='totalPrice' data-sort='-1'>从高到低</li><li class='aa' data-name='totalPrice' data-sort='1'>从低到高</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:105px;'>"
                              +"地区"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='areaNo' data-sort='-1'>升序排列</li><li class='aa' data-name='areaNo' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
@@ -254,11 +254,11 @@ $(document).ready(function(){
                              +"<td>"
                              +"手机"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:90px;'>"
                              +"数据源"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='source' data-sort='-1'>升序排列</li><li class='aa' data-name='source' data-sort='1'>降序排列</li></ul></div></div>"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:100px;'>"
                              +"更新时间"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='updateTime' data-sort='-1'>从远到近</li><li class='aa' data-name='updateTime' data-sort='1'>从近到远</li></ul></div></div>"
                              +"</td>"
@@ -379,14 +379,9 @@ $(document).ready(function(){
                             $(this).children(".rank").hide();
                         })
                         $("ul .aa").click(function(){
-                            /*var _sortName = $(this).data("name");
-                            var _sort = $(this).data("sort");*/
                             /*sessionStorage.setItem("sortName", $(this).data("name"));
                             sessionStorage.setItem("sort", $(this).data("sort"));*/
                             add(page,$(this).data("name"),$(this).data("sort"));
-                            /*$(this).parents(".rank").attr("data-name",_sortName);*/
-                            /*sessionStorage.setItem("sortName", $("#excelDivBox").data("name"));
-                            sessionStorage.setItem("sort", $("#excelDivBox").data("sort"));*/
                             $("#excelDivBox").attr("name",$(this).data("name"));
                             $("#excelDivBox").val($(this).data("sort"));
                         })
@@ -467,9 +462,11 @@ $(document).ready(function(){
 
         //查询
         $("#search").click(function(){
-        	_isPageInit = false;
-            add(1,null,null);
-            /*rate();*/
+        	/*_isPageInit = false;*/
+            add(1,null,null);/*
+            $(".main_form").removeClass("product_form");
+            $(".box-body").removeClass("product_box")
+            $(".table_box").removeClass("product_tabel")*/
             $(".fomr_data li").last().css({"border-right":"none"})
             $(".main_form").show();
         })
@@ -480,6 +477,7 @@ $(document).ready(function(){
     $(function(){
         /***获得文件路径***/
         $(".a-upload").on("change","input[type='file']",function(){
+            $(".main_form").addClass("mb_wd")
             var filePath=$(this).val();
             console.log(filePath);
             if(filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
@@ -500,6 +498,7 @@ $(document).ready(function(){
             }*/
             if(filePath != null){
                 $(".showFileName").html(null);
+                $(".excelStoll").show();
                 var option = {
                     url : "/price/excelData",
                     type : 'POST',
@@ -585,6 +584,12 @@ $(document).ready(function(){
                                     }
                                 });
                                 $("#search").click();
+                                $(".main_form").addClass("product_form");
+                                $(".box-body").addClass("product_box");
+                                $(".table_box").addClass("product_tabel");
+                                if($(window).width()<=1440){
+                                    $(".mb_wd").css({"width":"850px"})
+                                }
                             })
                         }else{
                             $(".showFileName").html(data.msg);

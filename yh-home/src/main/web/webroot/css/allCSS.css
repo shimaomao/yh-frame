@@ -21,7 +21,7 @@ input{
 
 .war{
     z-index: 1;
-    min-width:1366px;
+    min-width:1349px;
 }
 input[type=search]::-ms-clear{
     display: none;

@@ -39,11 +39,11 @@
             <li>
                 <div class="projectRegion">
                     <label>工程地区：</label>
-                    <input type="text" name="variety" value="" class="form-control input_w" placeholder="" id="cityBegin" />
+                    <input type="text" name="variety" value="" class="form-control input_w" placeholder="首次输入详细地址后自动保存地址，下次不用输入" id="cityBegin" />
                 </div>
                 <div class="projectRegion">
                     <label>苗木地区：</label>
-                    <input type="text" name="variety" value="${destination}" class="form-control input_w" placeholder="" id="cityFinish" />
+                    <input type="text" name="variety" value="${destination}" class="form-control input_w" placeholder="自动读取供应商地区" id="cityFinish" />
                 </div>
                 <div class="projectRegion">
                     <button type="button" class="btn btn-default botton" id="cityInquire" class="cityInquire">查询费用</button>
@@ -73,5 +73,11 @@
 <script type="text/javascript" src="/js/freight/freight.js" charset="utf-8"></script>
 <!--百度地图-->
 <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=hPd6Kpab3nxkb2nDvFFXLGuIvLOfQhIF"></script>
+<script>
+    $(window).resize(function(){
+        var _Width = $(window).width();
+        $("body").css({"width":_Width})
+    })
+</script>
 </body>
 </html>

@@ -10,17 +10,17 @@
   color: #000;
   width:248px !important;
 }
-/* .province_box{
+ .province_box{
   position: relative;
-} */
+}
 .province{
   background: #fff;
   position: absolute;
-  top:215px;
-  right: 20px;
+  top:35px;
+  left: 110px;
   display: none;
   z-index: 2;
-  width: 40%;
+  width:75%;
 }
 .province dl{
   display: block;
@@ -30,15 +30,24 @@
 }
 .province dd{
   line-height: 40px;
-  height: 40px;
   font-size: 14px;
   width: 100%;
   border-bottom:solid 1px #ddd;
 }
+.province dd span{
+  display: inline-block;
+  padding:0 !important;
+  width:79%;
+  border-left:solid 1px #ddd;
+}
+.province dd span.p_width{
+  width: 70px;
+  min-width: 70px;
+  border-left:none;
+}
 .province dd em.overstriking{
   font-weight:bold;
   font-size:14px;
-  border-right:solid 1px #ddd;
   padding:0 20px;
 }
 .province dd em{
@@ -46,7 +55,7 @@
   display: inline-block;
   padding:0 10px;
   font-size: 12px;
-  line-height:40px;
+  line-height:30px;
   cursor: pointer;
   font-size:13px;
   color: #666;
@@ -60,6 +69,20 @@
   display: none;
   margin:0 50px;
 }
+.product_form{
+  float: left;
+  margin:0 30px;
+  margin-top:30px;
+  max-width: 1430px;
+}
+.product_box{
+  width: 100%;
+  overflow-x: auto;
+}
+.product_tabel{
+  width:1620px !important;
+}
+
 .fomr_top{
   font-size:16px;
   line-height: 70px;
@@ -89,11 +112,12 @@
 .showFileName{
   position: absolute;
   top:0;
-  left:150px;
+  left:160px;
   display: inline-block;
   line-height: 35px;
   color: #f00;
-  width: 100%;
+  width: 250px;
+  text-align: left;
 }
 .a-upload {
   position: relative;
@@ -171,23 +195,31 @@
   width: 100%;
   margin: 0 auto;
 }
-body{
+/* body{
   max-height:100% !important;
-}
+} */
 
 .excelDiv{
-	margin:0 auto;
-	margin-top:30px;
-	width:100%;
+  width: 400px;
+  float: left;
+  margin-top:30px;
+  margin-left:10px;
 }
 .excelStoll{
-	margin:0 50px;
-	overflow-y:auto;
-	/*overflow:hidden;*/
-	height:450px;
+  width: 400px;
+  height: 500px;
+  overflow: scroll;
+  display: none;
 }
 .excelStoll a{
 	cursor:pointer;
+}
+#excelTable{
+  width: 600px;
+}
+
+.excel_form{
+  width: 100%;
 }
 
 .table td{
