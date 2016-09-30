@@ -462,7 +462,7 @@ $(document).ready(function(){
 
         //查询
         $("#search").click(function(){
-        	/*_isPageInit = false;*/
+        	_isPageInit = false;
             add(1,null,null);/*
             $(".main_form").removeClass("product_form");
             $(".box-body").removeClass("product_box")
