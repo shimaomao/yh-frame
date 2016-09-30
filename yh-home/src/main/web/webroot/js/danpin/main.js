@@ -262,7 +262,7 @@ $(document).ready(function(){
                              +"更新时间"
                              +"<div class='sort'><img src='../images/sort_bel.png'><div class='rank'><ul><li class='aa' data-name='updateTime' data-sort='-1'>从远到近</li><li class='aa' data-name='updateTime' data-sort='1'>从近到远</li></ul></div></div>"
                              +"</td>"
-                             +"<td style='width:135px;'>"
+                             +"<td style='width:140px;'>"
                              +"操作"
                              +"</td>"
                              +"</tr>";
