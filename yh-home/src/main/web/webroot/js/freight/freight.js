@@ -5,6 +5,7 @@ $(document).ready(function(){
         var start = "";//始点
         var end = "";//终点
         var output = "";//距离
+        map.enableScrollWheelZoom();
         if(localStorage.getItem("start") !=null) $("#cityBegin").val(localStorage.getItem("start"));
         map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
         //三种驾车策略：最少时间，最短距离，避开高速
