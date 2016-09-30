@@ -1,7 +1,8 @@
 .input_w{
-  max-width:140px;
+  max-width:130px;
   padding:0 12px !important;
 }
+#taxRate{width: 70px !important;}
 .buttom_w{
   max-width:298px;
   text-align:center;
@@ -17,10 +18,10 @@
   background: #fff;
   position: absolute;
   top:35px;
-  left: 110px;
+  left: 135px;
   display: none;
   z-index: 2;
-  width:75%;
+  width:70%;
 }
 .province dl{
   display: block;
@@ -37,7 +38,7 @@
 .province dd span{
   display: inline-block;
   padding:0 !important;
-  width:79%;
+  width:77%;
   border-left:solid 1px #ddd;
 }
 .province dd span.p_width{
@@ -53,7 +54,7 @@
 .province dd em{
   float: left;
   display: inline-block;
-  padding:0 10px;
+  padding-left:10px;
   font-size: 12px;
   line-height:30px;
   cursor: pointer;
@@ -73,7 +74,7 @@
   float: left;
   margin:0 30px;
   margin-top:30px;
-  max-width: 1430px;
+  max-width: 1565px;
 }
 .product_box{
   width: 100%;
@@ -86,6 +87,8 @@
 .fomr_top{
   font-size:16px;
   line-height: 70px;
+  width: 100%;
+  float: left;
 }
 
 .fomr_data{
@@ -200,13 +203,13 @@
 } */
 
 .excelDiv{
-  width: 400px;
+  width: 265px;
   float: left;
   margin-top:30px;
   margin-left:10px;
 }
 .excelStoll{
-  width: 400px;
+  width: 265px;
   height: 500px;
   overflow: scroll;
   display: none;
@@ -215,7 +218,7 @@
 	cursor:pointer;
 }
 #excelTable{
-  width: 600px;
+  width: 450px;
 }
 
 .excel_form{
