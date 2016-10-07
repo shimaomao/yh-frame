@@ -186,12 +186,12 @@ public class UserPriceServiceImpl implements UserPriceService {
         //排序条件
         JsonObject sortJson = new JsonObject().put("$sort", sortJson(query));
         
-        //project.add(projectJson)
+        //project
         JsonObject projectJson = new JsonObject().put("$project", productJson());
    
         //组装查询条件
         Integer skip = query.getInteger("skip")-1>0?(query.getInteger("skip")-1)*query.getInteger("limit"):0;
-        JsonArray pipelineArrayJson = new JsonArray().add(matchJson).add(sortJson)
+        JsonArray pipelineArrayJson = new JsonArray().add(matchJson).add(sortJson).add(projectJson)
         			.add(new JsonObject().put("$skip",skip))
         			.add(new JsonObject().put("$limit", query.getInteger("limit")));
         
@@ -214,7 +214,8 @@ public class UserPriceServiceImpl implements UserPriceService {
         }
         
         //过滤主体
-        JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
+        JsonObject matchJson = new JsonObject().put("$match", pushJson(query).put("startingFare", new JsonObject().put("$gt", 0))
+        						.put("miDiameterMax", new JsonObject().put("$gt", 0)).put("miDiameterMin", new JsonObject().put("$gt", 0)));
              
         //分组
         JsonObject groupJson = new JsonObject().put("$group", groupJson(query));
@@ -325,13 +326,15 @@ public class UserPriceServiceImpl implements UserPriceService {
 	}
 
 	/**
-	 * 过滤字段
+	 * 过滤字段(_id、id、op、、createTime、breedName)
 	 */
 	static JsonObject productJson(){
-		JsonObject proJson = new JsonObject().put("_id", 0).put("area",1).put("areaNo",0)
-		.put("op", 0).put("miDiameter", 1).put("totalPrice", 1).put("updateTime",1).put("source", 0)
-		.put("productName",1).put("breedName", 0).put("createTime", 0).put("supplier", 1).put("invoiceType", 0)
-		.put("startingFare", 1).put("tel", 1).put("contacts", 1).put("height", 1).put("crown", 1);
+		JsonObject proJson = new JsonObject().put("_id", 0).put("area",1)
+			.put("miDiameterMax", 1).put("miDiameterMin", 1).put("areaNo",1)
+			.put("totalPrice", 1).put("updateTime",1).put("source", 1)
+			.put("details", 1).put("productName",1).put("supplier", 1).put("invoiceType", 1)
+			.put("startingFare", 1).put("tel", 1).put("contacts", 1).put("heightMax", 1)
+			.put("heightMin", 1).put("crownMax", 1).put("crownMin", 1);
 		return proJson;
 	}
 	
