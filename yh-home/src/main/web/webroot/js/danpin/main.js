@@ -508,7 +508,7 @@ $(document).ready(function(){
                         if(data.code == 0){
                             $(".main_form").hide();
                             var result = data.result;
-                            var excelHtml="<tr><th>序号</th><th width='110'>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
+                            var excelHtml="<tr><th>序号</th><th style='width:110px;'>品种名称</th><th>胸径</th><th>高度</th><th>冠幅</th></tr>";
                             $(result).each(function(index){
                                 if(index ==0) return;
                                 excelHtml+="<tr name='a'>"
