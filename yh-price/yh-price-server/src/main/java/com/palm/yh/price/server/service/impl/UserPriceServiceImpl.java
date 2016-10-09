@@ -212,10 +212,9 @@ public class UserPriceServiceImpl implements UserPriceService {
             result.accept(null);
             return;
         }
-        
+		//.put("miDiameterMax", new JsonObject().put("$gt", 0)).put("miDiameterMin", new JsonObject().put("$gt", 0)).put("startingFare", new JsonObject().put("$gt", 0))
         //过滤主体
-        JsonObject matchJson = new JsonObject().put("$match", pushJson(query).put("startingFare", new JsonObject().put("$gt", 0))
-        						.put("miDiameterMax", new JsonObject().put("$gt", 0)).put("miDiameterMin", new JsonObject().put("$gt", 0)));
+        JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
              
         //分组
         JsonObject groupJson = new JsonObject().put("$group", groupJson(query));
