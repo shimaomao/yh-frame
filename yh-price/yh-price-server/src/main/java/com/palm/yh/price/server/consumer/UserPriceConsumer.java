@@ -125,8 +125,8 @@ public class UserPriceConsumer extends PalmConsumer {
            CompositeFuture.all(productTotal, supplierTotal).setHandler(futureHandler ->{
           		List<JsonObject> productTotalResult = futureHandler.result().result(0);
                 List<JsonObject> supplierTotalResult = futureHandler.result().result(1);
-                productTotalResult.add(new JsonObject().put("supplierTotal", supplierTotalResult.size()));
-                logger.debug("获取结果productTotalResult :{}, supplierTotalResult: {}", productTotalResult, supplierTotalResult.size());
+                productTotalResult.add(new JsonObject().put("supplierTotal", supplierTotalResult.get(0).getInteger("count")));
+                logger.debug("获取结果productTotalResult :{}, supplierTotalResult: {}", productTotalResult, supplierTotalResult.get(0).getInteger("count"));
 	           	handler.reply(new JsonObject().put("count", productTotalResult)); 
        	   });
     };

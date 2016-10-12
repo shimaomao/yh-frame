@@ -244,9 +244,11 @@ public class UserPriceServiceImpl implements UserPriceService {
         JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
              
         //分组获得供应商
-        JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$supplier")));
-        JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$_id.supplier")));
-   
+        /*JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$supplier")));
+        JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$_id.supplier")));*/
+        JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", "$supplier"));
+        JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", "").put("count", new JsonObject().put("$sum", 1)));
+        
         //组装查询条件
         JsonArray pipelineArrayJson = new JsonArray().add(matchJson).add(groupJson).add(groupJson1);
         
