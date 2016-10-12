@@ -29,7 +29,7 @@ public class OpenPageHandler implements Handler<RoutingContext> {
     
     @Override
     public void handle(RoutingContext routingContext) {
-		Future<JsonObject> arceFuture = Future.future();
+		/*Future<JsonObject> arceFuture = Future.future();
 
             palmVert.getVertx().eventBus().<JsonObject>send(YhConsumerAddressUtil.PRICE_FIND_AREA, new JsonObject().put("key", "arce"), reply -> {
                 if (reply.succeeded()) {
@@ -46,6 +46,9 @@ public class OpenPageHandler implements Handler<RoutingContext> {
 	            httpSupport.sendTemplate(routingContext, handler.result(), "/webroot/danpin.html", result ->{
 	                logger.debug("结果：{}", result);
 	            });
-            });
+            });*/
+    	  httpSupport.sendTemplate(routingContext, new JsonObject(), "/webroot/danpin.html", result ->{
+              logger.debug("结果：{}", result);
+    	  });
     }
 }
