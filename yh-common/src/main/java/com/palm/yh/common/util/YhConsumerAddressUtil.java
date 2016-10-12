@@ -8,8 +8,10 @@ package com.palm.yh.common.util;
  * @author fengzt
  */
 public class YhConsumerAddressUtil {
-
-
+	
+	public YhConsumerAddressUtil() {
+		
+	}
 	/**
 	 * 新增用户
      */
@@ -58,4 +60,10 @@ public class YhConsumerAddressUtil {
 	 * 查询地区
      */
 	public static final String PRICE_FIND_AREA = "P2P.com.palm.yh.price.server.service.area";
+	/**
+	 * 统计产品信息
+     */
+	public static final String PRICE_TOTAL_PRODUCT = "P2P.com.palm.yh.price.server.service.total";
+	
+	
 }

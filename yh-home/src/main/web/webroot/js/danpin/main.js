@@ -195,16 +195,12 @@ $(document).ready(function(){
                       skip:page,
                       limit:_pageSize,
                       sortField:sortField /*!= ''?sortField:sessionStorage.getItem("sortName")*/,
-                      sort:sort/* != ''?sort:sessionStorage.getItem("sort")*/,
+                      sort:sort/* != ''?sort:sessionStorage.getItem("sort")*/
                   };
         	  return param;
         }
         
-        function add(page,sortField,sort){
-	        	/*if($(".buttom_w").val() == ''){
-	        		alert("请选择地区");
-	        		return;
-	        	}*/
+        function add(page,sortField,sort,isPage){
                 $.ajax({
                     type: 'POST',
                     url: "/price/findProduct",
@@ -266,34 +262,10 @@ $(document).ready(function(){
                              +"操作"
                              +"</td>"
                              +"</tr>";
-                    	if(data.result.length == 0){
-                    		  var topDiv = $(".fomr_top em");
-                              pageTotal=0;
-                              topDiv.eq(0).text(0);
-                              topDiv.eq(1).text(0);
-                              topDiv.eq(2).text(0);
-                              topDiv.eq(3).text(0);
-                              topDiv.eq(4).text(0);
-                              topDiv.eq(5).text(0);
-                              topDiv.eq(6).text(0);
-                              topDiv.eq(7).text(0);
-                              topDiv.eq(8).text(0);
-                              topDiv.eq(9).text(0);
-                    		$("#itemContainer").html(trhtml);
-                    	}else{
-                        var count=data.count;
-                        var topDiv = $(".fomr_top em");
-                        pageTotal=count[0].countTotal;
-                        topDiv.eq(0).text(count[0].countTotal);
-                        topDiv.eq(1).text(count[1].supplierTotal);
-                        topDiv.eq(2).text(count[0].miDiameterMin);
-                        topDiv.eq(3).text(count[0].miDiameterMax);
-                        topDiv.eq(4).text(count[0].FareMin);
-                        topDiv.eq(5).text(count[0].FareMax);
-                        topDiv.eq(6).text(count[0].FareAvg.toFixed(2));
-                        topDiv.eq(7).text(count[0].TotalPriceMin);
-                        topDiv.eq(8).text(count[0].TotalPriceMax);
-                        topDiv.eq(9).text(count[0].PriceAvg.toFixed(2));
+                       //统计和分页
+                       total(isPage,data.body,data.result.length,_isPageInit,_pageSize,sortField,sort);  
+                      
+					   if(data.result.length > 0){
                         var liHTML = "";
                         var data=data.result;
                         var _priceAl = "";//税率
@@ -341,7 +313,7 @@ $(document).ready(function(){
                                 + data[i].tel
                                 + "</td>"
                                 + "<td>"
-                                + data[i].source
+                                + (data[i].source=='1'?"外部数据":"其他数据")
                                 + "</td>"
                                 + "<td>"
                                 + data[i].updateTime
@@ -357,8 +329,11 @@ $(document).ready(function(){
                                 + "</tr>";
                         	}
                         	$("#itemContainer").html(trhtml + liHTML);
+                    	}else{
+                    		$("#itemContainer").html(trhtml);
                     	}
-                        //组装
+                      
+                        //组装冠幅、高度、米径/胸径的值
                         function judge(num1,num2){
                             if(num1 == 0 && num2 == 0 ){
                                 return "";
@@ -371,71 +346,17 @@ $(document).ready(function(){
                             }
                         }
                         //排序
-                        /*var height = $(".height_tr").height();
-                        $(".rank").css({"top":height})*/
                         $(".sort").hover(function(){
                             $(this).children(".rank").show();
                         },function(){
                             $(this).children(".rank").hide();
                         })
                         $("ul .aa").click(function(){
-                            /*sessionStorage.setItem("sortName", $(this).data("name"));
-                            sessionStorage.setItem("sort", $(this).data("sort"));*/
-                            add(page,$(this).data("name"),$(this).data("sort"));
+                            add(page,$(this).data("name"),$(this).data("sort"),false);
                             $("#excelDivBox").attr("name",$(this).data("name"));
                             $("#excelDivBox").val($(this).data("sort"));
                         })
-                        /*if(sessionStorage.getItem("sortName") != null && sessionStorage.getItem("sort") != null){
-                        	/!*$("[data-name='"+sessionStorage.getItem("sortName")+"']").attr("data-sort",sessionStorage.getItem("sort"));*!/
-                            var Max=new RegExp('Max');
-                            var Min=new RegExp('Min');
-                            var name= sessionStorage.getItem($(this).data("name"));
-                           /!* if(sessionStorage.getItem("sortName"))
-                            {
 
-                                $("[data-name='"+name+"']").attr("data-sort",sessionStorage.getItem("sort"));
-                            }*!/
-                            if(Max.test(name)){
-                                var new_name=name.replace("Max","Min");
-                                $("[data-name='"+name+"']").attr("data-name",new_name);
-                            }
-                            if(Min.test(name)){
-                                var new_name=name.replace("Min","Max");
-                                $("[data-name='"+name+"']").attr("data-name",new_name);
-                            }/!*
-                            i
-                            if(sort==1){
-                                $(".sort").addClass("sort_on")
-                            }
-                            if(sort==-1){
-                                $(".sort").removeClass("sort_on");
-                            }*!/
-                        }*/
-
-                        /*****分页初始化*****/
-                        if(!_isPageInit){
-                            $("#paging").pagination(pageTotal, {
-                                items_per_page: _pageSize,	//每页数量
-                                num_display_entries: 5,
-                                num_edge_entries: 2,
-                                prev_text: "上一页",
-                                next_text: "下一页",
-                                callback:function(page){
-                                    /*console.log("" + page);*/
-                                   /* add(page);*/
-                                    var bb = "", aa = "";
-                                    if($("#excelDivBox").attr("name") != null && $("#excelDivBox").val() != null){
-                                        bb = $("#excelDivBox").attr("name");
-                                        aa = parseInt($("#excelDivBox").val());
-                                    }else{
-                                        bb = sortField;
-                                        aa = sort;
-                                    }
-                                    add(page+1,bb,aa);
-                                }
-                            });
-                            _isPageInit = true;
-                        }
                       
                   	  /****税率***/
                       function rate(data) {
@@ -463,16 +384,79 @@ $(document).ready(function(){
         //查询
         $("#search").click(function(){
         	_isPageInit = false;
-            add(1,null,null);/*
-            $(".main_form").removeClass("product_form");
-            $(".box-body").removeClass("product_box")
-            $(".table_box").removeClass("product_tabel")*/
+            add(1,null,null,true);
             $(".fomr_data li").last().css({"border-right":"none"})
             $(".main_form").show();
         })
+
+        /*********统计***********/
+     	function total(isPage,body,length,_isPageInit,_pageSize,sortField,sort){
+            if(isPage){
+           	 if(length == 0){
+          		  var topDiv = $(".fomr_top em");
+                    pageTotal=0;
+                    topDiv.eq(0).text(0);
+                    topDiv.eq(1).text(0);
+                    topDiv.eq(2).text(0);
+                    topDiv.eq(3).text(0);
+                    topDiv.eq(4).text(0);
+                    topDiv.eq(5).text(0);
+                    topDiv.eq(6).text(0);
+                    topDiv.eq(7).text(0);
+                    topDiv.eq(8).text(0);
+                    topDiv.eq(9).text(0);
+                    $("#paging").hide();
+          	}else{
+          		   $.ajax({
+                        type: 'POST',
+                        url: "/price/total",
+                        data: {"param" : JSON.stringify(body)},//提交数据到服务器
+                        dataType: "json",
+                        success: function(data){
+                             var count=data.count;
+                             var topDiv = $(".fomr_top em");
+                             var pageTotal=count[0].countTotal;
+                             topDiv.eq(0).text(count[0].countTotal);
+                             topDiv.eq(1).text(count[1].supplierTotal);
+                             topDiv.eq(2).text(count[0].miDiameterMin);
+                             topDiv.eq(3).text(count[0].miDiameterMax);
+                             topDiv.eq(4).text(count[0].FareMin);
+                             topDiv.eq(5).text(count[0].FareMax);
+                             topDiv.eq(6).text(count[0].FareAvg.toFixed(2));
+                             topDiv.eq(7).text(count[0].TotalPriceMin);
+                             topDiv.eq(8).text(count[0].TotalPriceMax);    
+                             /*****分页初始化*****/
+                             if(!_isPageInit){
+                                 $("#paging").pagination(pageTotal, {
+                                     items_per_page: _pageSize,	//每页数量
+                                     num_display_entries: 5,
+                                     num_edge_entries: 2,
+                                     prev_text: "上一页",
+                                     next_text: "下一页",
+                                     callback:function(page){
+                                         var bb = "", aa = "";
+                                         if($("#excelDivBox").attr("name") != null && $("#excelDivBox").val() != null){
+                                             bb = $("#excelDivBox").attr("name");
+                                             aa = parseInt($("#excelDivBox").val());
+                                         }else{
+                                             bb = sortField;
+                                             aa = sort;
+                                         }
+                                         add(page+1,bb,aa,false);
+                                     }
+                                 });
+                                 _isPageInit = true;
+                             }
+                        }
+                   }); 
+               }	         
+           	}
+        }
+        
     })
 
 
+    
     /********excel**********/
     $(function(){
         /***获得文件路径***/
@@ -487,15 +471,6 @@ $(document).ready(function(){
                 $(".showFileName").html("上传文件类型有误！");
                 return false;
             }
-            /*if (file == '') {
-                $(".showFileName").html('请上传excel文件!');
-                return;
-            }*/
-            //如果文件不是xls或者xlsx 提示输入正确的excel文件
-            /*if ((file.indexOf('.xls') == -1 && file.indexOf('.xlsx') == -1)) {
-                $(".showFileName").html('请上传正确的excel,后缀名为xls或xlsx!');
-                return;
-            }*/
             if(filePath != null){
                 $(".showFileName").html(null);
                 $(".excelStoll").show();

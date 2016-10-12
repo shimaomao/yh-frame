@@ -9,6 +9,7 @@ import com.palm.yh.client.web.handler.ExcelHandler;
 import com.palm.yh.client.web.handler.FindProductHandler;
 import com.palm.yh.client.web.handler.FreightPageHandler;
 import com.palm.yh.client.web.handler.OpenPageHandler;
+import com.palm.yh.client.web.handler.TotalHandler;
 
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -32,6 +33,9 @@ public class UserPriceRouter extends RouterWare {
     private FindProductHandler findProductHandler;
     
     @Autowired
+    private TotalHandler totalHandler;
+    
+    @Autowired
     private ExcelHandler excelHandler;
     
 
@@ -47,6 +51,9 @@ public class UserPriceRouter extends RouterWare {
         
         //查询产品（分页）
         router.post("/findProduct").handler(findProductHandler);
+        
+        //统计产品
+        router.post("/total").handler(totalHandler);
         
         //运费查询
         router.get("/freightPage/:destination").handler(findFreightHandler);

@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,7 @@ import com.palm.yh.common.util.YhCollectionUtil;
 import com.palm.yh.price.server.service.UserPriceService;
 
 import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
 import io.vertx.core.Handler;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClientUpdateResult;
@@ -343,7 +340,10 @@ public class UserPriceServiceImpl implements UserPriceService {
 	 * @return
 	 */
 	static JsonObject pushJson(JsonObject query){
-		JsonObject matchJson = new JsonObject().put("areaNo", new JsonObject().put("$regex", "^"+query.getString("areaNo")+".*$"));
+		JsonObject matchJson = new JsonObject();
+		if(query.getString("areaNo") != null && query.getString("areaNo") != ""){
+			matchJson.put("areaNo", new JsonObject().put("$regex", "^"+query.getString("areaNo")+".*$"));	
+		}			
         if(query.getString("breedName") != null && query.getString("breedName") != ""){
         	matchJson.put("breedName", new JsonObject().put("$regex", query.getString("breedName")));
         }

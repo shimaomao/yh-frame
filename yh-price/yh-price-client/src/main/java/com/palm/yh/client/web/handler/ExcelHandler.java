@@ -99,10 +99,12 @@ public class ExcelHandler implements Handler<RoutingContext> {
       
      public static Sheet getSheet(Workbook wb, int sheetIndex) {  
           if (wb == null) {  
+        	  logger.info("工作簿对象为空");
               throw new RuntimeException("工作簿对象为空");  
           }  
           int sheetSize = wb.getNumberOfSheets();  
           if (sheetIndex < 0 || sheetIndex > sheetSize - 1) {  
+        	  logger.info("工作表获取错误");
               throw new RuntimeException("工作表获取错误");  
           }  
           return wb.getSheetAt(sheetIndex);  
