@@ -335,7 +335,7 @@ $(document).ready(function(){
                       
                         //组装冠幅、高度、米径/胸径的值
                         function judge(num1,num2){
-                            if(num1 == 0 && num2 == 0 ){
+                            if((num1 == 0 && num2 == 0) || (num1 == null && num2 == null)){
                                 return "";
                             }
                             if(num1== num2){
@@ -427,6 +427,7 @@ $(document).ready(function(){
                              topDiv.eq(8).text(count[0].TotalPriceMax);    
                              /*****分页初始化*****/
                              if(!_isPageInit){
+                            	 $("#paging").show();
                                  $("#paging").pagination(pageTotal, {
                                      items_per_page: _pageSize,	//每页数量
                                      num_display_entries: 5,
