@@ -44,6 +44,9 @@ $(document).ready(function(){
      	  $('#time2').val(getNowFormatDate(date));
      	  date.setDate(date.getDate() - 59);
      	  $('#time').val(getNowFormatDate(date));
+     	  $(".buttom_w").val();
+     	  $(".buttom_w").text('选择省份');
+     	  localStorage.clear();
     });
     
     /*****设置时间*********/
@@ -105,7 +108,7 @@ $(document).ready(function(){
     
     /*****省份*********/
     $(function(){
-    	$(".buttom_w").val(localStorage.getItem("areaNo"));
+    	$(".buttom_w").val(localStorage.getItem("areaNo") == null?'':localStorage.getItem("areaNo"));
     	var area = localStorage.getItem("area");
     	$(".buttom_w").text(area == null?'选择省份':area);
         var div = $(".province dd em");
