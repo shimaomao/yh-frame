@@ -56,7 +56,7 @@ public interface UserPriceService {
     void delete(JsonObject query, Handler<AsyncResult<MongoClientUpdateResult>> handler);
 
     /**
-     * 计算条数
+     * 计算报价总数
      * @param query
      * @param handler
      */

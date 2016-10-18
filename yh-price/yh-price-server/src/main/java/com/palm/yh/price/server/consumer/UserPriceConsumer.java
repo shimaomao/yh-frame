@@ -113,20 +113,25 @@ public class UserPriceConsumer extends PalmConsumer {
            	handler.reply(new JsonObject().put("code", "-1").put("msg", "QUERY_ERROR").put("count", "{}")); 
            	return;
            }
-           Future<List<JsonObject>> productTotal = Future.future();
+           Future<List<JsonObject>> productAvg = Future.future();
            Future<List<JsonObject>> supplierTotal = Future.future();
+           Future<Long> productTotal = Future.future();
            userPriceService.findProductTotal(body, resultTotalHandler ->{
-        		productTotal.complete(resultTotalHandler);
+        	   productAvg.complete(resultTotalHandler);
            });
            userPriceService.supplierTotal(body, supplierHandler ->{
         		supplierTotal.complete(supplierHandler);
            });
-           CompositeFuture.all(productTotal, supplierTotal).setHandler(futureHandler ->{
-          		List<JsonObject> productTotalResult = futureHandler.result().result(0);
+           userPriceService.count(body, CountingMessageHandler ->{
+        	   productTotal.complete(CountingMessageHandler.result());
+           });
+           CompositeFuture.all(productAvg, supplierTotal,productTotal).setHandler(futureHandler ->{
+          		List<JsonObject> productAvgResult = futureHandler.result().result(0);
                 List<JsonObject> supplierTotalResult = futureHandler.result().result(1);
-                productTotalResult.add(new JsonObject().put("supplierTotal", supplierTotalResult.get(0).getInteger("count")));
-                logger.debug("获取结果productTotalResult :{}, supplierTotalResult: {}", productTotalResult, supplierTotalResult.get(0).getInteger("count"));
-	           	handler.reply(new JsonObject().put("count", productTotalResult)); 
+                Long productTotalResult = futureHandler.result().result(2);
+                productAvgResult.add(new JsonObject().put("supplierTotal", supplierTotalResult.get(0).getInteger("count")).put("productTotal", productTotalResult));
+                logger.debug("获取结果productAvgResult :{}, supplierTotalResult: {},productTotalResult: {}", productAvgResult, supplierTotalResult.get(0).getInteger("count"),productTotalResult);
+	           	handler.reply(new JsonObject().put("count", productAvgResult)); 
        	   });
     };
     

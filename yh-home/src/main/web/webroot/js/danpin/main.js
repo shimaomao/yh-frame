@@ -44,7 +44,7 @@ $(document).ready(function(){
      	  $('#time2').val(getNowFormatDate(date));
      	  date.setDate(date.getDate() - 59);
      	  $('#time').val(getNowFormatDate(date));
-     	  $(".buttom_w").val();
+     	  $(".buttom_w").val("");
      	  $(".buttom_w").text('选择省份');
      	  localStorage.clear();
     });
@@ -418,8 +418,8 @@ $(document).ready(function(){
                         success: function(data){
                              var count=data.count;
                              var topDiv = $(".fomr_top em");
-                             var pageTotal=count[0].countTotal;
-                             topDiv.eq(0).text(count[0].countTotal);
+                             var pageTotal=count[1].productTotal;
+                             topDiv.eq(0).text(count[1].productTotal);
                              topDiv.eq(1).text(count[1].supplierTotal);
                              topDiv.eq(2).text(count[0].miDiameterMin);
                              topDiv.eq(3).text(count[0].miDiameterMax);

@@ -142,10 +142,8 @@ public class UserPriceServiceImpl implements UserPriceService {
             handler.handle(null);
             return;
         }
-        //查询单个站内消息
-        query.put("op", OpType.ACT);
         logger.debug("[count]查询条件：{}", query);
-        mongoSupport.getMongoClient().count(YhCollectionUtil.USER_INFO_COLLECTION, query, resultHandler -> {
+        mongoSupport.getMongoClient().count(YhCollectionUtil.PRICE_PRODUCT, pushJson(query), resultHandler -> {
             if (resultHandler.succeeded()) {
                 logger.debug("[count]返回的结果 :{}", resultHandler.result());
             }
@@ -209,9 +207,9 @@ public class UserPriceServiceImpl implements UserPriceService {
             result.accept(null);
             return;
         }
-		//.put("miDiameterMax", new JsonObject().put("$gt", 0)).put("miDiameterMin", new JsonObject().put("$gt", 0)).put("startingFare", new JsonObject().put("$gt", 0))
+		//.put("miDiameterMax", new JsonObject().put("$gt", 0)).put("miDiameterMin", new JsonObject().put("$gt", 0))
         //过滤主体
-        JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
+        JsonObject matchJson = new JsonObject().put("$match", pushJson(query).put("startingFare", new JsonObject().put("$gt", 0)));
              
         //分组
         JsonObject groupJson = new JsonObject().put("$group", groupJson(query));
@@ -244,8 +242,6 @@ public class UserPriceServiceImpl implements UserPriceService {
         JsonObject matchJson = new JsonObject().put("$match", pushJson(query));
              
         //分组获得供应商
-        /*JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$supplier")));
-        JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", new JsonObject().put("supplier", "$_id.supplier")));*/
         JsonObject groupJson = new JsonObject().put("$group", new JsonObject().put("_id", "$supplier"));
         JsonObject groupJson1 = new JsonObject().put("$group", new JsonObject().put("_id", "").put("count", new JsonObject().put("$sum", 1)));
         
@@ -421,9 +417,10 @@ public class UserPriceServiceImpl implements UserPriceService {
 		//上车平均价、到货平均价、总报价数
 		groupJson.put("FareAvg", new JsonObject().put("$avg", "$startingFare"));
 		groupJson.put("PriceAvg", new JsonObject().put("$avg", "$totalPrice"));
-		groupJson.put("countTotal", new JsonObject().put("$sum", 1));
+	/*	groupJson.put("countTotal", new JsonObject().put("$sum", 1));*/
 		return groupJson;
 	}
+	
 	
 	/**
 	 * project（总报价数，胸径范围 max-min，上车价范围 max-min，上车平均价，到货价范围 max-min，到货平均价）
