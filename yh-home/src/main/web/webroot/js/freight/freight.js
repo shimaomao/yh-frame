@@ -14,8 +14,8 @@ $(document).ready(function(){
             $(".distanceCost").show();
             $(".allmap").show();
             //路线
-            start = $("#cityBegin").val()/*"天安门"*/;
-            end = $("#cityFinish").val()/*"百度大厦"*/;
+            start = $("#cityFinish").val()/*"天安门"*/;
+            end = $("#cityBegin").val()/*"百度大厦"*/;
             localStorage.setItem("start",start);//保存本地地址
             map.clearOverlays();
             /* var i=$("#driving_way select").val();*/

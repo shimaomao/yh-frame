@@ -250,7 +250,7 @@ $(document).ready(function(){
                              +"<td style='width:70px;'>"
                              +"联系人"
                              +"</td>"
-                             +"<td>"
+                             +"<td style='width:100px;'>"
                              +"手机"
                              +"</td>"
                              +"<td style='width:90px;'>"
