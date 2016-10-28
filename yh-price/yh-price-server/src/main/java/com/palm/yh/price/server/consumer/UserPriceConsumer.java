@@ -72,7 +72,8 @@ public class UserPriceConsumer extends PalmConsumer {
             	next.complete(resultHandler);
             });
             return next;
-        }).thenCompose(second ->{
+        })
+       /* .thenCompose(second ->{
         	CompletableFuture<List<JsonObject>> next = new CompletableFuture<List<JsonObject>>();
         	//全条件查询为0，则排除高度和冠幅
         	if(second.size() == 0){
@@ -86,7 +87,8 @@ public class UserPriceConsumer extends PalmConsumer {
                 next.complete(second);
             }
         	return next;    	
-        }).thenCompose(third ->{
+        })*/
+        .thenCompose(third ->{
         	CompletableFuture<List<JsonObject>> next = new CompletableFuture<List<JsonObject>>();
         	//排除高度和冠幅也为0，产品名替换品种名
         	if(third.size() == 0){

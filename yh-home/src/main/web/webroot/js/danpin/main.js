@@ -496,17 +496,17 @@ $(document).ready(function(){
                                     +"</td>"
                                     +"<td>"
                                     +"<a class='appoint'>"
-                                    +result[index].productName
+                                    +(result[index].productName == null?'':result[index].productName)
                                     +"</a>"
                                     +"</td>"
                                     +"<td>"
-                                    +result[index].midiaMeter
+                                    +(result[index].midiaMeter == null?'':result[index].midiaMeter)
                                     +"</td>"
                                     +"<td>"
-                                    +result[index].height
+                                    +(result[index].height == null?'':result[index].height)
                                     +"</td>"
                                     +"<td>"
-                                    +result[index].crown
+                                    +(result[index].crown == null?'':result[index].crown)
                                     +"</td>"
                                     +"</tr>"
                             });

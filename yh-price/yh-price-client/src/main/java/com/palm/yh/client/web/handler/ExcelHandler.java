@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -114,31 +116,58 @@ public class ExcelHandler implements Handler<RoutingContext> {
 	        List<List<String>> list = getExcelRows(getSheet(wbs, 0), -1, -1);   //得到上传文件内容
 	    
 	        JsonArray result = new JsonArray();
-	        int buffer[] = new int[5];
+	        int buffer[] = new int[]{1000,1000,1000,1000,1000};
 	        //获取字段对应列的index
 	        for (int i = 0; i < list.size(); i++) {  
 	            List<String> row = list.get(i);  
 	            for (int j = 0; j < row.size(); j++) {
 	            	if(row.get(j).contains("序号"))buffer[0]=j;
 	            	else if(row.get(j).contains("产品"))buffer[1]=j;
+	            	else if(buffer[1]==1000 && row.get(j).contains("标准名称"))buffer[1]=j;
 	            	else if(row.get(j).contains("胸径"))buffer[2]=j;
 	            	else if(row.get(j).contains("高度"))buffer[3]=j;
 	            	else if(row.get(j).contains("冠幅"))buffer[4]=j;
 	            } 
 	    	}
+	        if(isNot(buffer)){
+	        	return result;
+	        }
 	        for (int i = 0; i < list.size(); i++) { 
 	            List<String> row = list.get(i);  
-	            if(row.size()<4) continue;
+	            if(row.size()<1) continue;
 	            JsonObject excel = new JsonObject();
 	            if(row.get(buffer[1]) == null || row.get(buffer[1]) == "") continue;
-	            excel.put("productName", row.get(buffer[1]));
-	            excel.put("midiaMeter", row.get(buffer[2]));
-	            excel.put("height", row.get(buffer[3]));
-	            excel.put("crown", row.get(buffer[4])); 
+	            if(buffer[1] != 1000){
+	            	 excel.put("productName", letterUtil(row.get(buffer[1])));
+	            }
+	            if(buffer[2] != 1000){
+	            	 excel.put("midiaMeter", row.get(buffer[2]));
+	            }
+	            if(buffer[3] != 1000){
+	            	 excel.put("height", row.get(buffer[3]));
+	            }
+	            if(buffer[4] != 1000){
+	            	 excel.put("crown", row.get(buffer[4])); 
+	            }
 	            result.add(excel);
 	        }
 	        return result;
 	}
+    
+    //判断excel表对应\序号、产品|标准名称、胸径、高度、冠幅是否存在
+    private static boolean isNot(int buffer[]){
+    	for (int i : buffer) {
+			if(i!=1000) return false;
+		}
+    	return true;
+    }
+    
+    //过滤产品名称字母
+    private static String letterUtil(String name){
+    	Pattern pattern = Pattern.compile("[a-zA-z]");
+	    Matcher isLetter = pattern.matcher(name);
+    	return  isLetter.replaceAll("").trim();
+    }
     
     public static List<List<String>> getExcelRows(Sheet sheet, int startLine, int endLine) {  
         List<List<String>> list = new ArrayList<List<String>>();  
