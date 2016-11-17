@@ -172,7 +172,83 @@ $(document).ready(function(){
             localStorage.setItem("area", $(this).text());
         })
     })
+    
+    /******* 验证信息 *******/
+ 	function validation(){
+   		var $midiaMeterMin = $("[name=midiaMeterMin]");
+   		var $midiaMeterMax = $("[name=midiaMeterMax]");
+   		var $updateTimeMin = $("[name=updateTimeMin]");
+   		var $updateTimeMax = $("[name=updateTimeMax]");
+   		var $heightMin = $("[name=heightMin]");
+   		var $heightMax = $("[name=heightMax]");
+   		var $crownMin = $("[name=crownMin]");
+   		var $crownMax = $("[name=crownMax]");
+   		if(isNaN($midiaMeterMin.val()) || ($midiaMeterMin.val() != '' && $midiaMeterMin.val() <=0)){
+   			alert("请输入正确的胸径/米径最小值！");
+   			$midiaMeterMin.focus();
+   			return false;
+   		}
+   		if(isNaN($midiaMeterMax.val()) || ($midiaMeterMax.val() != '' && $midiaMeterMax.val() <=0)){
+   			alert("请输入正确的胸径/米径最大值！");
+   			$miDiameterMax.focus();
+   			return false;
+   		}
+   		if(isNaN($heightMin.val()) || ($heightMin.val() != '' && $heightMin.val() <=0)){
+   			alert("请输入正确的高度最小值！");
+   			$heightMin.focus();
+   			return false;
+   		}
+   		if(isNaN($heightMax.val()) || ($heightMax.val() != '' && $heightMax.val() <=0)){
+   			alert("请输入正确的高度最大值！");
+   			$heightMax.focus();
+   			return false;
+   		}
+   		if(isNaN($crownMin.val()) || ($crownMin.val() != '' && $crownMin.val() <=0)){
+   			alert("请输入正确的冠幅最小值！");
+   			$crownMin.focus();
+   			return false;
+   		}
+   		if(isNaN($crownMax.val()) || ($crownMax.val() != '' && $crownMax.val() <=0)){
+   			alert("请输入正确的冠幅最大值！");
+   			$crownMax.focus();
+   			return false;
+   		}
+   		if($crownMax.val() != '' && $crownMin.val() != '' && new Number($crownMax.val())<new Number($crownMin.val())){
+   			alert("冠幅最大值不能小于最小值！");
+   			$crownMax.focus();
+   			return false;
+   		}
+   		if($heightMax.val() != '' && $heightMin.val() != '' && new Number($heightMax.val())<new Number($heightMin.val())){
+   			alert("高度最大值不能小于最小值！");
+   			$heightMax.focus();
+   			return false;
+   		}
+   		if($midiaMeterMax.val() != '' && $midiaMeterMin.val() != '' && new Number($midiaMeterMax.val())<new Number($midiaMeterMin.val())){
+   			alert("胸径最大值不能小于最小值！");
+   			$midiaMeterMin.focus();
+   			return false;
+   		}
+   		if($updateTimeMin.val() != '' && $updateTimeMax.val() != ''){
+   			if(!checkEndTime($updateTimeMin.val(),$updateTimeMax.val())){
+   				alert("时间最大值不能小于最小值！");
+   				return false;
+   			}	
+   		}
+   		return true;
+   	}
 
+    /******* 时间验证 *******/
+    function checkEndTime($startTime,$endTime){  
+        var startTime=$startTime;  
+        var start=new Date(startTime.replace("-", "/").replace("-", "/"));  
+        var endTime=$endTime;  
+        var end=new Date(endTime.replace("-", "/").replace("-", "/"));  
+        if(end<start){  
+            return false;  
+        }  
+        return true;  
+    }  
+    
     /*******form********/
     $(function(){
         var pageTotal="";
@@ -387,9 +463,11 @@ $(document).ready(function(){
         //查询
         $("#search").click(function(){
         	_isPageInit = false;
-            add(1,null,null,true);
-            $(".fomr_data li").last().css({"border-right":"none"})
-            $(".main_form").show();
+        	if(validation()){
+        		add(1,null,null,true);
+                $(".fomr_data li").last().css({"border-right":"none"})
+                $(".main_form").show();
+        	}
         })
 
         /*********统计***********/
@@ -455,8 +533,7 @@ $(document).ready(function(){
                    }); 
                }	         
            	}
-        }
-        
+        }      
     })
 
 
